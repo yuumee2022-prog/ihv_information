@@ -197,8 +197,8 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
   <div class="topbar">
     <div class="brandmark">izu<br>high village</div>
     <div class="stay">
-      <b data-i18n="stay_title"></b>
-      <span data-i18n="stay_sub"></span>
+      <b id="stayT"></b>
+      <span id="stayS"></span>
     </div>
     <button class="topbtn" id="langbtn" aria-label="Language"><span id="langlabel">あA<br>JP</span></button>
     <button class="topbtn plain" id="menubtn" aria-label="menu">
@@ -350,7 +350,16 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
    ========================================================= */
 var T={
   stay_title:{ja:"ご滞在中",en:"Your stay","zh-CN":"入住期间","zh-TW":"入住期間",ko:"숙박 중"},
-  stay_sub:{ja:"チェックアウト 10:00 まで",en:"Check-out by 10:00","zh-CN":"退房时间 10:00 前","zh-TW":"退房時間 10:00 前",ko:"체크아웃 10:00까지"},
+  st_generic_s:{ja:"チェックイン 16:00〜 ／ チェックアウト 〜10:00",en:"Check-in from 16:00 / Check-out by 10:00","zh-CN":"入住 16:00起／退房 10:00前","zh-TW":"入住 16:00起／退房 10:00前",ko:"체크인 16:00부터 / 체크아웃 10:00까지"},
+  st_before_t:{ja:"チェックインまで あと{n}日",en:"{n} days until check-in","zh-CN":"距离入住还有{n}天","zh-TW":"距離入住還有{n}天",ko:"체크인까지 {n}일"},
+  st_tomorrow_t:{ja:"明日チェックイン",en:"Check-in tomorrow","zh-CN":"明天入住","zh-TW":"明天入住",ko:"내일 체크인"},
+  st_in_sub:{ja:"{d} {t}から",en:"{d} from {t}","zh-CN":"{d} {t}起","zh-TW":"{d} {t}起",ko:"{d} {t}부터"},
+  st_today_in_t:{ja:"本日チェックイン",en:"Check-in today","zh-CN":"今天入住","zh-TW":"今天入住",ko:"오늘 체크인"},
+  st_from_sub:{ja:"{t}から",en:"From {t}","zh-CN":"{t}起","zh-TW":"{t}起",ko:"{t}부터"},
+  st_out_sub:{ja:"チェックアウト {d} {t}まで",en:"Check-out {d} by {t}","zh-CN":"退房 {d} {t}前","zh-TW":"退房 {d} {t}前",ko:"체크아웃 {d} {t}까지"},
+  st_today_out_t:{ja:"本日チェックアウト",en:"Check-out today","zh-CN":"今天退房","zh-TW":"今天退房",ko:"오늘 체크아웃"},
+  st_by_sub:{ja:"{t}まで",en:"By {t}","zh-CN":"{t}前","zh-TW":"{t}前",ko:"{t}까지"},
+  st_thanks_t:{ja:"ご宿泊ありがとうございました",en:"Thank you for staying","zh-CN":"感谢您的入住","zh-TW":"感謝您的入住",ko:"머물러 주셔서 감사합니다"},
   contact:{ja:"連絡する",en:"Contact","zh-CN":"联系我们","zh-TW":"聯絡我們",ko:"문의하기"},
   small:{ja:"小",en:"Small","zh-CN":"小","zh-TW":"小",ko:"작게"},
   large:{ja:"大",en:"Large","zh-CN":"大","zh-TW":"大",ko:"크게"},
@@ -680,6 +689,7 @@ function render(){
   var ls=document.querySelectorAll("#langsheet [data-lang]");
   for(var j=0;j<ls.length;j++){ ls[j].setAttribute("aria-selected", ls[j].getAttribute("data-lang")===lang); }
   if(sheet.classList.contains("open") && current) show(current);
+  renderStay();
 }
 
 var sheet=document.getElementById("sheet"),
@@ -814,6 +824,47 @@ document.getElementById("menubtn").addEventListener("click",function(){ open("in
   else if(n.indexOf("ja")===0) lang="ja";
   else lang="en";
 })();
+/* ===== 滞在状況の表示 ===== */
+var stay=null;
+function jst(ms){ var d=new Date(ms+9*3600000); return {m:d.getUTCMonth()+1,d:d.getUTCDate(),hm:("0"+d.getUTCHours()).slice(-2)+":"+("0"+d.getUTCMinutes()).slice(-2)}; }
+function jday(ms){ return Math.floor((ms+9*3600000)/86400000); }
+function fmt(str,o){ return str.replace(/\{(\w+)\}/g,function(_,k){ return o[k]; }); }
+
+function renderStay(){
+  var T_=document.getElementById("stayT"), S_=document.getElementById("stayS");
+  if(!T_||!S_) return;
+  var title="izu high village", sub=t("st_generic_s");
+  if(stay){
+    var now=Date.now(), ci=jst(stay.ci), co=jst(stay.co);
+    var dNow=jday(now), dCi=jday(stay.ci), dCo=jday(stay.co);
+    if(now<stay.ci){
+      if(dCi===dNow){ title=t("st_today_in_t"); sub=fmt(t("st_from_sub"),{t:ci.hm}); }
+      else { title=(dCi-dNow===1)?t("st_tomorrow_t"):fmt(t("st_before_t"),{n:dCi-dNow}); sub=fmt(t("st_in_sub"),{d:ci.m+"/"+ci.d,t:ci.hm}); }
+    } else if(now<stay.co){
+      if(dCo===dNow){ title=t("st_today_out_t"); sub=fmt(t("st_by_sub"),{t:co.hm}); }
+      else { title=t("stay_title"); sub=fmt(t("st_out_sub"),{d:co.m+"/"+co.d,t:co.hm}); }
+    } else if(dCo===dNow){ title=t("st_thanks_t"); sub=""; }
+  }
+  T_.textContent=title; S_.textContent=sub;
+}
+
+// ?in=2026-10-03（2026/10/03, 20261003 も可）→ その予約。なければ今日の予約。一度受け取った日付は端末に覚えさせる
+(function(){
+  var KEY="ihv_stay", reqIn=null, saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
+  if(saved&&saved.co&&saved.co<Date.now()-86400000){ try{ localStorage.removeItem(KEY); }catch(e){} saved=null; }
+  var q=null; try{ q=new URLSearchParams(location.search).get("in"); }catch(e){}
+  if(q){ q=q.replace(/\//g,"-"); if(/^\d{8}$/.test(q)) q=q.slice(0,4)+"-"+q.slice(4,6)+"-"+q.slice(6); }
+  if(q&&/^\d{4}-\d{2}-\d{2}$/.test(q)) reqIn=q; else if(saved&&saved.in) reqIn=saved.in;
+  fetch(GAS_URL+(reqIn?"?in="+reqIn:"")).then(function(r){ return r.json(); }).then(function(res){
+    if(res&&res.ok&&res.stay){
+      stay=res.stay;
+      if(reqIn){ try{ localStorage.setItem(KEY,JSON.stringify({in:reqIn,co:stay.co})); }catch(e){} }
+      renderStay();
+    }
+  }).catch(function(){});
+})();
+
 render();
 
 })();
