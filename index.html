@@ -169,6 +169,10 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
 .sendmsg.ok{color:var(--accent-ink);font-weight:700}
 .sendmsg.ng{color:#C0392B}
 .send[disabled]{opacity:.55;cursor:default}
+.ckbar{display:none;gap:8px;padding:0 12px 10px}
+.ckbar.show{display:flex}
+.ckbtn{flex:1;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:11px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.ckbtn[disabled]{opacity:.5;cursor:default}
 .steps{counter-reset:st;margin:0 0 4px;padding:0;list-style:none}
 .steps li{counter-increment:st;display:flex;gap:12px;align-items:flex-start;margin-bottom:13px;font-size:14px}
 .steps li::before{content:counter(st);flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;display:grid;place-items:center}
@@ -204,6 +208,11 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
     <button class="topbtn plain" id="menubtn" aria-label="menu">
       <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
+  </div>
+
+  <div class="ckbar" id="ckbar">
+    <button class="ckbtn" id="ckinbtn" data-i18n="ck_in_btn"></button>
+    <button class="ckbtn" id="ckoutbtn" data-i18n="ck_out_btn"></button>
   </div>
 
   <div class="hero">
@@ -360,6 +369,9 @@ var T={
   st_today_out_t:{ja:"本日チェックアウト",en:"Check-out today","zh-CN":"今天退房","zh-TW":"今天退房",ko:"오늘 체크아웃"},
   st_by_sub:{ja:"{t}まで",en:"By {t}","zh-CN":"{t}前","zh-TW":"{t}前",ko:"{t}까지"},
   st_thanks_t:{ja:"ご宿泊ありがとうございました",en:"Thank you for staying","zh-CN":"感谢您的入住","zh-TW":"感謝您的入住",ko:"머물러 주셔서 감사합니다"},
+  ck_in_btn:{ja:"到着しました",en:"I've arrived","zh-CN":"已到达","zh-TW":"已到達",ko:"도착했습니다"},
+  ck_out_btn:{ja:"出発します",en:"I'm leaving","zh-CN":"即将出发","zh-TW":"即將出發",ko:"출발합니다"},
+  ck_sent:{ja:"送信済み",en:"Sent","zh-CN":"已发送","zh-TW":"已傳送",ko:"전송됨"},
   contact:{ja:"連絡する",en:"Contact","zh-CN":"联系我们","zh-TW":"聯絡我們",ko:"문의하기"},
   small:{ja:"小",en:"Small","zh-CN":"小","zh-TW":"小",ko:"작게"},
   large:{ja:"大",en:"Large","zh-CN":"大","zh-TW":"大",ko:"크게"},
@@ -846,6 +858,31 @@ function renderStay(){
     } else if(dCo===dNow){ title=t("st_thanks_t"); sub=""; }
   }
   T_.textContent=title; S_.textContent=sub;
+  updateCkBar();
+}
+
+function updateCkBar(){
+  var bar=document.getElementById("ckbar"), bi=document.getElementById("ckinbtn"), bo=document.getElementById("ckoutbtn");
+  if(!bar) return;
+  if(!stay){ bar.classList.remove("show"); return; }
+  var now=Date.now();
+  var showIn = jday(now)===jday(stay.ci) && now<stay.co;
+  var showOut = jday(now)===jday(stay.co) && now<stay.co;
+  bar.classList.toggle("show", showIn||showOut);
+  bi.style.display = showIn ? "" : "none";
+  bo.style.display = showOut ? "" : "none";
+}
+
+function bindCk(){
+  var bi=document.getElementById("ckinbtn"), bo=document.getElementById("ckoutbtn");
+  if(bi) bi.addEventListener("click", function(){ sendCk("checkin", bi); });
+  if(bo) bo.addEventListener("click", function(){ sendCk("checkout", bo); });
+}
+function sendCk(action, btn){
+  btn.disabled=true;
+  fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({token:GAS_TOKEN,action:action})})
+    .then(function(){ btn.textContent=t("ck_sent"); })
+    .catch(function(){ btn.disabled=false; });
 }
 
 // ?in=2026-10-03（2026/10/03, 20261003 も可）→ その予約。なければ今日の予約。一度受け取った日付は端末に覚えさせる
@@ -865,6 +902,7 @@ function renderStay(){
   }).catch(function(){});
 })();
 
+bindCk();
 render();
 
 })();
