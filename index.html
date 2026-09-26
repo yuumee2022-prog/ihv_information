@@ -840,6 +840,10 @@ document.getElementById("menubtn").addEventListener("click",function(){ open("in
 var stay=null;
 function jst(ms){ var d=new Date(ms+9*3600000); return {m:d.getUTCMonth()+1,d:d.getUTCDate(),hm:("0"+d.getUTCHours()).slice(-2)+":"+("0"+d.getUTCMinutes()).slice(-2)}; }
 function jday(ms){ return Math.floor((ms+9*3600000)/86400000); }
+function jstHour(ms){ return new Date(ms+9*3600000).getUTCHours(); }
+
+// 「出発します」ボタンを当日いつまで出すか（時、0-23）。null なら終日表示
+var CHECKOUT_BUTTON_LIMIT_HOUR = null; // 例：12 にすると12:00までに制限
 function fmt(str,o){ return str.replace(/\{(\w+)\}/g,function(_,k){ return o[k]; }); }
 
 function renderStay(){
@@ -867,7 +871,8 @@ function updateCkBar(){
   if(!stay){ bar.classList.remove("show"); return; }
   var now=Date.now();
   var showIn = jday(now)===jday(stay.ci) && now<stay.co;
-  var showOut = jday(now)===jday(stay.co) && now<stay.co;
+  var showOut = jday(now)===jday(stay.co)
+    && (CHECKOUT_BUTTON_LIMIT_HOUR===null || jstHour(now) < CHECKOUT_BUTTON_LIMIT_HOUR);
   bar.classList.toggle("show", showIn||showOut);
   bi.style.display = showIn ? "" : "none";
   bo.style.display = showOut ? "" : "none";
