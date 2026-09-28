@@ -296,6 +296,18 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="6.5" r="2"/><path d="M2 19l6-8 4.5 5.5"/><path d="M11 19l4-5 7 5"/><path d="M2 19h20"/></svg>
       <span data-i18n="sightseeing"></span>
     </button>
+    <button class="tile" data-open="doorlock">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v18H7z"/><path d="M4 21h16"/><circle cx="14.5" cy="12" r=".8" fill="currentColor"/></svg>
+      <span data-i18n="doorlock"></span>
+    </button>
+    <button class="tile" data-open="gasmeter">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 4.5 5.5 4.5 9.5a4.5 4.5 0 01-9 0c0-2.2 1.2-3.6 2.5-4.7.2 1.6 1 2.4 2 2.7-.5-2.3-.5-4.6 0-7.5z"/></svg>
+      <span data-i18n="gasmeter"></span>
+    </button>
+    <button class="tile" data-open="sofamat">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 00-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/></svg>
+      <span data-i18n="sofamat"></span>
+    </button>
   </div>
 
   <button class="faq" data-open="parking">
@@ -554,6 +566,15 @@ var T={
 
   sightseeing:{ja:"観光案内",en:"Things to do","zh-CN":"观光指南","zh-TW":"觀光導覽",ko:"관광 안내"},
   sight_1:{ja:"伊東の観光情報は、伊東観光協会の公式サイトにまとまっています。季節のイベント、温泉、体験、見どころが探せます。",en:"The Ito Tourism Association's official site covers events, hot springs, activities and sights across the area.","zh-CN":"伊东的观光信息汇总于伊东观光协会官方网站，可查询季节活动、温泉、体验与景点。","zh-TW":"伊東的觀光資訊彙整於伊東觀光協會官方網站，可查詢季節活動、溫泉、體驗與景點。",ko:"이토의 관광 정보는 이토관광협회 공식 사이트에 정리되어 있습니다. 계절 이벤트, 온천, 체험, 볼거리를 찾을 수 있습니다."},
+
+  doorlock:{ja:"玄関の開け方",en:"Opening the door","zh-CN":"玄关开锁","zh-TW":"玄關開鎖",ko:"현관문 열기"},
+  gasmeter:{ja:"ガスメーター",en:"Gas meter reset","zh-CN":"燃气表复位","zh-TW":"瓦斯錶復位",ko:"가스 계량기 복구"},
+  sofamat:{ja:"ソファマットレス",en:"Sofa mattress","zh-CN":"沙发床垫","zh-TW":"沙發床墊",ko:"소파 매트리스"},
+  door_lead:{ja:"暗証番号を押したあと、つまみ（サムターン）を右に回すと解錠します。",en:"After entering the code, turn the knob (thumb-turn) to the right to unlock.","zh-CN":"输入密码后，将旋钮（拇指锁）向右转动即可开锁。","zh-TW":"輸入密碼後，將旋鈕（拇指鎖）向右轉動即可開鎖。",ko:"비밀번호를 누른 후 손잡이(섬턴)를 오른쪽으로 돌리면 열립니다."},
+  gas_lead:{ja:"停電などでガスが止まったときの復帰方法です。",en:"How to restore the gas after it stops, for example after a power outage.","zh-CN":"停电等导致燃气被切断时的复位方法。","zh-TW":"停電等導致瓦斯被切斷時的復位方法。",ko:"정전 등으로 가스가 멈췄을 때의 복구 방법입니다."},
+  washer_lead:{ja:"洗剤は本体内のタンクから自動で投入されるコースがあります。柔軟剤は手動です。",en:"Some courses dispense detergent automatically from the built-in tank. Fabric softener is added manually.","zh-CN":"部分模式会从机身内水箱自动投放洗涤剂，柔顺剂需手动投放。","zh-TW":"部分模式會從機身內水箱自動投放洗滌劑，柔軟精需手動投放。",ko:"일부 코스는 본체 내 탱크에서 세제가 자동 투입됩니다. 섬유유연제는 직접 넣어 주세요."},
+  sofamat_lead:{ja:"床に敷いて使う簡易ベッドの広げ方と、布団・枕の保管場所です。",en:"How to unfold the floor mattress, and where the futons and pillows are stored.","zh-CN":"铺在地板上的简易床的展开方法，以及被褥・枕头的收纳位置。","zh-TW":"鋪在地板上的簡易床的展開方法，以及被褥・枕頭的收納位置。",ko:"바닥에 까는 간이 침대를 펼치는 방법과 이불・베개 보관 장소입니다."},
+  btn_guide_page:{ja:"写真つきの手順を見る",en:"See the step-by-step guide with photos","zh-CN":"查看附照片的步骤说明","zh-TW":"查看附照片的步驟說明",ko:"사진이 있는 순서 보기"},
   btn_ito:{ja:"伊東観光協会のサイトを見る",en:"Visit the Ito Tourism Association site","zh-CN":"访问伊东观光协会网站","zh-TW":"造訪伊東觀光協會網站",ko:"이토관광협회 사이트 보기"}
 };
 
@@ -569,6 +590,8 @@ function fill(s){ return '<p><span class="fill">'+s+'</span></p>'; }
 function btn(url,key){
   return '<a class="linkbtn" href="'+url+'" target="_blank" rel="noopener">'+t(key)+'<span class="chev"></span></a>';
 }
+// 別ページへのリンク。アプリで選んだ言語を ?lang= で引き継ぐ
+function pbtn(file,key){ return btn(file+"?lang="+lang,key); }
 function shop(name,meta,descKey){
   return '<div class="shop"><b>'+name+'</b><em>'+meta+'</em><span>'+t(descKey)+'</span></div>';
 }
@@ -612,12 +635,24 @@ function content(key){
     p("night_1")+p("night_2")+p("night_3")};
 
   case "washer": return {title:t("washer"), body:
-    fill("【要記入：洗剤自動投入の説明。洗剤・柔軟剤の投入口の位置と入れ分け、補充の要否、基本のコース。投入口が写った写真があると確実です】")};
+    p("washer_lead")+
+    pbtn("washer.html","btn_guide_page")};
+
+    case "doorlock": return {title:t("doorlock"), body:
+    p("door_lead")+
+    pbtn("door-lock.html","btn_guide_page")};
+
+  case "gasmeter": return {title:t("gasmeter"), body:
+    p("gas_lead")+
+    pbtn("gas-meter-reset.html","btn_guide_page")};
+
+  case "sofamat": return {title:t("sofamat"), body:
+    p("sofamat_lead")+
+    pbtn("sofa-mattress.html","btn_guide_page")};
 
   case "sofabed": return {title:t("sofabed"), body:
-    fill("【要記入：ソファベッドの展開手順／ソファマットレスの使い方。写真か短い動画があると伝わります】")+
-    fill("【要記入：布団の場所。「1階◯◯の押入れ」のように階と部屋を明記。押入れを開けた写真が1枚あると説明が要らなくなります】")};
-
+    fill("【要記入：ソファベッドの展開手順。写真か短い動画があると伝わります】")};
+  
   case "photo": return {title:t("photo"), body:
     '<button class="howto" id="howtobtn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 114 2.1c-.9.6-1.6 1.1-1.6 2.2M12 16.8v.4"/></svg>'+t("photo_howto")+'</button>'+
     '<div id="howtobox" hidden><ol class="steps">'+
