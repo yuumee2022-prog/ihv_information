@@ -72,6 +72,7 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:10px 12px 0}
 .tile{
+  position:relative;
   background:var(--bg);border:1px solid var(--line);border-bottom:2px solid var(--edge);
   border-radius:7px;aspect-ratio:1/.92;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
@@ -81,6 +82,7 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
 .tile:active{background:var(--sub)}
 .tile svg{width:31px;height:31px;stroke:var(--ink-2);fill:none;stroke-width:1.5;flex:0 0 auto}
 .tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.feebadge{position:absolute;top:6px;right:7px;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
 
 .faq{
   display:flex;align-items:center;gap:9px;width:calc(100% - 24px);margin:22px 12px 10px;
@@ -144,7 +146,6 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
 .callout{background:var(--sub);border-radius:9px;padding:13px 15px;margin:0 0 12px;font-size:13.5px}
 .callout.warn{border-left:3px solid var(--accent);border-radius:4px 9px 9px 4px}
 
-/* 写真でコメント */
 .howto{display:inline-flex;align-items:center;gap:7px;color:var(--accent-ink);font-size:14px;font-weight:500;cursor:pointer;background:transparent;border:0;padding:0;margin:0 0 16px;font-family:inherit}
 .howto svg{width:19px;height:19px;stroke:var(--accent);fill:none;stroke-width:1.7}
 .shot{position:relative;border:1px solid var(--line);border-radius:6px;aspect-ratio:1/1;display:grid;place-items:center;overflow:hidden;margin-bottom:10px;background:var(--bg)}
@@ -269,10 +270,12 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
       <span data-i18n="sofabed"></span>
     </button>
     <button class="tile" data-open="bbq">
+      <span class="feebadge">¥</span>
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16l-2.5 7h-11z"/><path d="M8.5 16L7 21M15.5 16L17 21"/><path d="M9 6c0-1 1-1.5 1-2.5M13 6c0-1 1-1.5 1-2.5"/></svg>
       <span data-i18n="bbq"></span>
     </button>
     <button class="tile" data-open="dog">
+      <span class="feebadge">¥</span>
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="7" cy="8" rx="1.8" ry="2.4"/><ellipse cx="12" cy="6.5" rx="1.8" ry="2.4"/><ellipse cx="17" cy="8" rx="1.8" ry="2.4"/><path d="M12 12c-3 0-5 2.2-5 4.6C7 19 9 20 12 20s5-1 5-3.4C17 14.2 15 12 12 12z"/></svg>
       <span data-i18n="dog"></span>
     </button>
@@ -307,6 +310,10 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
     <button class="tile" data-open="sofamat">
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7"/><path d="M3 14h18v4"/><path d="M21 14v-2a3 3 0 00-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/></svg>
       <span data-i18n="sofamat"></span>
+    </button>
+    <button class="tile" data-open="houserules">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9.5 12l2 2 3.5-3.5"/></svg>
+      <span data-i18n="houserules"></span>
     </button>
   </div>
 
@@ -364,11 +371,6 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
 <script>
 (function(){
 
-/* =========================================================
-   i18n辞書。ja / en は掲示PDFの原文。
-   zh-CN / zh-TW / ko が未記入のものは en → ja の順で表示されます。
-   Viteに移すときは locales/ja.json などに分割します。
-   ========================================================= */
 var T={
   stay_title:{ja:"ご滞在中",en:"Your stay","zh-CN":"入住期间","zh-TW":"入住期間",ko:"숙박 중"},
   st_generic_s:{ja:"チェックイン 16:00〜 ／ チェックアウト 〜10:00",en:"Check-in from 16:00 / Check-out by 10:00","zh-CN":"入住 16:00起／退房 10:00前","zh-TW":"入住 16:00起／退房 10:00前",ko:"체크인 16:00부터 / 체크아웃 10:00까지"},
@@ -436,14 +438,11 @@ var T={
   copied:{ja:"済",en:"Done","zh-CN":"已复制","zh-TW":"已複製",ko:"완료"},
   longpress:{ja:"長押しで選択",en:"Long-press","zh-CN":"长按选择","zh-TW":"長按選擇",ko:"길게 눌러 선택"},
 
-  /* --- Wi-Fi --- */
   wifi_lead:{ja:"ご滞在中、無料Wi-Fiをご利用いただけます。",en:"Free Wi-Fi is available during your stay.","zh-CN":"入住期间可免费使用Wi-Fi。","zh-TW":"入住期間可免費使用Wi-Fi。",ko:"숙박 중 무료 Wi-Fi를 이용하실 수 있습니다."},
 
-  /* --- 連絡する --- */
   sos_1:{ja:"滞在中のご質問やご相談は、予約サイトのチャットへメッセージをお送りください。",en:"For questions during your stay, please message us through the booking site chat.","zh-CN":"入住期间如有疑问，请通过预订网站的聊天功能联系我们。","zh-TW":"入住期間如有疑問，請透過訂房網站的聊天功能聯絡我們。",ko:"숙박 중 문의사항은 예약 사이트 채팅으로 메시지를 보내주세요."},
   sos_2:{ja:"緊急時はお電話ください。",en:"In an emergency, please call us.","zh-CN":"紧急情况请致电。","zh-TW":"緊急情況請致電。",ko:"긴급 시에는 전화해 주세요."},
 
-  /* --- 設備・備品 --- */
   guide_lead:{ja:"この宿では、「暮らすように過ごせる最低限」と「くつろぎ」を大切にしています。",en:"We aim for just enough to live comfortably, and room to relax.","zh-CN":"本住宿重视「如同生活般的最低限度」与「放松」。","zh-TW":"本住宿重視「如同生活般的最低限度」與「放鬆」。",ko:"이 숙소는 '생활하듯 지낼 수 있는 최소한'과 '편안함'을 중요하게 생각합니다."},
   h_basic:{ja:"ご滞在の基本",en:"The basics"},
   basic_1:{ja:"チェックイン 16:00〜／チェックアウト 〜10:00",en:"Check-in from 16:00 / Check-out by 10:00","zh-CN":"入住 16:00起／退房 10:00前","zh-TW":"入住 16:00起／退房 10:00前",ko:"체크인 16:00부터 / 체크아웃 10:00까지"},
@@ -460,12 +459,10 @@ var T={
   li_other:{ja:"洗濯機・物干しラック ／ ボードゲーム ／ 屋外用家具 ／ 火災報知器・消火器",en:"Washing machine & drying rack / board games / outdoor furniture / smoke alarm & fire extinguisher"},
   guide_note:{ja:"BBQグリルは有料オプションです。最新設備やホテル同等のサービスはありませんが、清掃と快適さを大切にしています。",en:"The BBQ grill is a paid option. We don't offer hotel-level service or the newest fittings, but we care about cleanliness and comfort."},
 
-  /* --- ごみ --- */
   gomi_1:{ja:"ゴミはキッチンで2つに分別してください。",en:"Please separate rubbish into two categories in the kitchen.","zh-CN":"请在厨房将垃圾分为两类。","zh-TW":"請在廚房將垃圾分為兩類。",ko:"쓰레기는 주방에서 두 가지로 분리해 주세요."},
   gomi_2:{ja:"「カン・びん・ペットボトル」",en:"Cans, bottles and PET bottles","zh-CN":"「罐・瓶・塑料瓶」","zh-TW":"「罐・瓶・寶特瓶」",ko:"「캔・병・페트병」"},
   gomi_3:{ja:"「それ以外」",en:"Everything else","zh-CN":"「其他垃圾」","zh-TW":"「其他垃圾」",ko:"「그 외」"},
 
-  /* --- お風呂・トイレ --- */
   h_bath:{ja:"お風呂",en:"Bath","zh-CN":"浴室","zh-TW":"浴室",ko:"욕실"},
   bath_1:{ja:"追い焚き機能はありません。",en:"The bath has no reheating function.","zh-CN":"浴缸没有再加热功能。","zh-TW":"浴缸沒有再加熱功能。",ko:"욕조에 재가열 기능은 없습니다."},
   bath_2:{ja:"お湯の温度は、キッチンの流し台にあるリモコンから調整できます。ぬるく感じた場合はこちらをご確認ください。",en:"Water temperature is adjusted from the remote control at the kitchen sink. If the water feels lukewarm, please check there.","zh-CN":"热水温度可通过厨房水槽处的遥控器调整。若感觉水温偏低，请查看该处。","zh-TW":"熱水溫度可透過廚房水槽處的遙控器調整。若感覺水溫偏低，請查看該處。",ko:"온수 온도는 주방 싱크대의 리모컨에서 조절할 수 있습니다. 미지근하게 느껴지면 그곳을 확인해 주세요."},
@@ -474,7 +471,6 @@ var T={
   toilet_1:{ja:"男性の方も座ってご利用をお願いします。",en:"All guests are kindly asked to sit when using the toilet.","zh-CN":"请所有客人坐着使用卫生间。","zh-TW":"請所有客人坐著使用洗手間。",ko:"남성분도 앉아서 이용해 주시기 바랍니다."},
   toilet_2:{ja:"トイレットペーパー以外は流さないようお願いします。",en:"Please do not flush anything other than toilet paper.","zh-CN":"请勿冲入卫生纸以外的物品。","zh-TW":"請勿沖入衛生紙以外的物品。",ko:"화장지 외에는 변기에 버리지 말아 주세요."},
 
-  /* --- BBQ --- */
   bbq_fee:{ja:"BBQセットは有料レンタル（3,000円）です。ご予約時にお支払い済みの場合は不要です。",en:"The BBQ set is a paid rental (¥3,000). Nothing further is due if you already paid at booking.","zh-CN":"烧烤套装为付费租借（3,000日元）。若已在预订时付款则无需再付。","zh-TW":"烤肉組合為付費租借（3,000日圓）。若已於訂房時付款則無需再付。",ko:"바비큐 세트는 유료 대여(3,000엔)입니다. 예약 시 결제하셨다면 추가 결제는 없습니다."},
   bbq_notice:{ja:"ご利用前に必ずご連絡ください。ご予約されたサイト（Airbnb / Booking.com等）のメッセージ機能から、事前に管理会社までご一報を。未払いの場合、お支払いはご利用後で構いません。",en:"Please tell us before you use it, via the message function of your booking site (Airbnb, Booking.com, etc.). If unpaid, you can settle after use.","zh-CN":"使用前请务必联系我们。请通过预订网站（Airbnb / Booking.com等）的消息功能事先告知管理公司。未付款的情况可于使用后支付。","zh-TW":"使用前請務必聯絡我們。請透過訂房網站（Airbnb / Booking.com等）的訊息功能事先告知管理公司。未付款的情況可於使用後支付。",ko:"이용 전 반드시 연락해 주세요. 예약하신 사이트(Airbnb / Booking.com 등)의 메시지 기능으로 관리회사에 미리 알려주시기 바랍니다. 미결제인 경우 이용 후 결제하셔도 됩니다."},
   bbq_time:{ja:"BBQなど屋外での飲食は20:00までとさせていただいています。",en:"Outdoor dining, including BBQ, is until 20:00.","zh-CN":"包括烧烤在内的户外用餐请于20:00前结束。","zh-TW":"包括烤肉在內的戶外用餐請於20:00前結束。",ko:"바비큐 등 실외 식사는 20:00까지입니다."},
@@ -494,16 +490,14 @@ var T={
   stool_fold:{ja:"収納するときは、組み立てるときとは逆の手順でたたんでください。最後に、上下のカバー中央をぐっと押すとロックがかかります。",en:"To fold it away, reverse the steps above. At the end, press the top and bottom covers firmly together to lock it.","zh-CN":"收纳时，请按照组装的相反顺序折叠。最后用力按压上下盖子中央即可锁定。","zh-TW":"收納時，請按照組裝的相反順序折疊。最後用力按壓上下蓋子中央即可鎖定。",ko:"보관할 때는 조립할 때와 반대 순서로 접어주세요. 마지막으로 상하 커버 중앙을 꾹 누르면 잠깁니다."},
   stool_note:{ja:"留め具がずれていたり、外れていると転倒してケガをする恐れがあります。固定されていない状態でのご使用はおやめください。",en:"If the fastener is misaligned or comes loose, it may tip over and cause injury. Please do not use it while unsecured.","zh-CN":"若卡扣错位或脱落，可能导致翻倒受伤。请勿在未固定的状态下使用。","zh-TW":"若卡扣錯位或脫落，可能導致翻倒受傷。請勿在未固定的狀態下使用。",ko:"고정 장치가 어긋나거나 빠지면 넘어져 다칠 위험이 있습니다. 고정되지 않은 상태로 사용하지 마세요."},
   btn_stool_pdf:{ja:"写真つきの組み立て方を見る",en:"See the assembly guide with photos","zh-CN":"查看附照片的组装说明","zh-TW":"查看附照片的組裝說明",ko:"사진이 있는 조립 방법 보기"},
-  
-  /* --- ペット --- */
+
   dog_1:{ja:"小型犬に限り、3匹まで同伴いただけます。猫はご遠慮ください。",en:"Small dogs only, up to three. We cannot accept cats.","zh-CN":"仅限小型犬，最多3只。猫恕不接待。","zh-TW":"僅限小型犬，最多3隻。貓恕不接待。",ko:"소형견에 한해 3마리까지 동반 가능합니다. 고양이는 받지 않습니다."},
-  dog_fee:{ja:"ペット料金は1滞在につき3,000円です。",en:"The pet fee is \u00a53,000 per stay.","zh-CN":"宠物费用为每次住宿3,000日元。","zh-TW":"寵物費用為每次住宿3,000日圓。",ko:"반려동물 요금은 1회 숙박당 3,000엔입니다."},
-  dog_notice:{ja:"ご予約サイトによっては、ペット料金が宿泊料金に含まれているように見える場合がありますが、別途申し受けております。ワンちゃんとご一緒で、まだご連絡をいただいていない場合は、ご予約サイトのメッセージ機能からご一報のうえ、お支払いをお願いいたします。",en:"On some booking sites the pet fee can look as though it is already included in the room rate. It is charged separately. If you have your dog with you and have not told us yet, please message us through your booking site so we can arrange payment.","zh-CN":"在部分预订网站上，宠物费用可能看起来已包含在住宿费中，但实际为另行收取。如您携犬同行且尚未与我们联系，请通过预订网站的消息功能告知，并完成支付。","zh-TW":"在部分訂房網站上，寵物費用可能看起來已包含在住宿費中，但實際為另行收取。如您攜犬同行且尚未與我們聯絡，請透過訂房網站的訊息功能告知，並完成支付。","ko":"일부 예약 사이트에서는 반려동물 요금이 숙박료에 포함된 것처럼 보일 수 있으나 별도로 부과됩니다. 반려견과 함께 오셨는데 아직 연락을 주지 않으셨다면 예약 사이트 메시지로 알려주시고 결제를 부탁드립니다."},
+  dog_fee:{ja:"ペット料金は1滞在につき3,000円です。",en:"The pet fee is ¥3,000 per stay.","zh-CN":"宠物费用为每次住宿3,000日元。","zh-TW":"寵物費用為每次住宿3,000日圓。",ko:"반려동물 요금은 1회 숙박당 3,000엔입니다."},
+  dog_notice:{ja:"ご予約サイトによっては、ペット料金が宿泊料金に含まれているように見える場合がありますが、別途申し受けております。ワンちゃんとご一緒で、まだご連絡をいただいていない場合は、ご予約サイトのメッセージ機能からご一報のうえ、お支払いをお願いいたします。",en:"On some booking sites the pet fee can look as though it is already included in the room rate. It is charged separately. If you have your dog with you and have not told us yet, please message us through your booking site so we can arrange payment.","zh-CN":"在部分预订网站上，宠物费用可能看起来已包含在住宿费中，但实际为另行收取。如您携犬同行且尚未与我们联系，请通过预订网站的消息功能告知，并完成支付。","zh-TW":"在部分訂房網站上，寵物費用可能看起來已包含在住宿費中，但實際為另行收取。如您攜犬同行且尚未與我們聯絡，請透過訂房網站的訊息功能告知，並完成支付。",ko:"일부 예약 사이트에서는 반려동물 요금이 숙박료에 포함된 것처럼 보일 수 있으나 별도로 부과됩니다. 반려견과 함께 오셨는데 아직 연락을 주지 않으셨다면 예약 사이트 메시지로 알려주시고 결제를 부탁드립니다."},
   dog_2:{ja:"ソファや布団の上には乗せないようお願いいたします。",en:"Please keep dogs off the sofas and futons.","zh-CN":"请勿让犬只上沙发或被褥。","zh-TW":"請勿讓犬隻上沙發或被褥。",ko:"소파나 이불 위에는 올리지 말아 주세요."},
   dog_3:{ja:"慣れない環境で粗相してしまう場合がありますので、ワンちゃんにはオムツの着用をお願いいたします。",en:"Dogs can be nervous in an unfamiliar place, so please have them wear diapers during your stay.","zh-CN":"犬只在陌生环境可能会失禁，请为爱犬穿着尿布。","zh-TW":"犬隻在陌生環境可能會失禁，請為愛犬穿著尿布。",ko:"낯선 환경에서 실수할 수 있으므로 반려견에게 기저귀를 착용시켜 주세요."},
   dog_4:{ja:"汚れが生じた場合は、別途清掃費をお願いすることがあります。",en:"If anything becomes soiled, an additional cleaning fee may apply.","zh-CN":"若造成污损，可能另行收取清洁费。","zh-TW":"若造成污損，可能另行收取清潔費。",ko:"오염이 발생한 경우 별도의 청소비를 청구할 수 있습니다."},
 
-  /* --- 室内でのお願い --- */
   in_1:{ja:"室内は禁煙です。喫煙は屋外でお願いいたします。",en:"No smoking indoors. Please smoke outside.","zh-CN":"室内禁烟。吸烟请到室外。","zh-TW":"室內禁菸。吸菸請到室外。",ko:"실내는 금연입니다. 흡연은 실외에서 부탁드립니다."},
   in_2:{ja:"靴は玄関でお脱ぎいただき、スリッパをご利用ください。",en:"Please remove your shoes at the entrance and use the slippers provided.","zh-CN":"请在玄关脱鞋，并使用拖鞋。","zh-TW":"請在玄關脫鞋，並使用拖鞋。",ko:"현관에서 신발을 벗고 슬리퍼를 이용해 주세요."},
   in_3:{ja:"バスタオルとフェイスタオルは、お一人様1枚ずつご用意しています。繰り返し大切に使っているため、お持ち帰りはご遠慮ください。",en:"One bath towel and one face towel are provided per guest. These are reused, so please do not take them with you.","zh-CN":"每位客人备有浴巾与面巾各一条。这些均为重复使用物品，请勿带走。","zh-TW":"每位客人備有浴巾與面巾各一條。這些均為重複使用物品，請勿帶走。",ko:"목욕 타월과 세면 타월은 1인당 1장씩 준비되어 있습니다. 반복해서 사용하는 물품이므로 가져가지 말아 주세요."},
@@ -512,28 +506,23 @@ var T={
   sec_2:{ja:"防犯・安全管理のため、玄関に防犯カメラを設置しています。",en:"For safety and security, a camera is installed at the entrance.","zh-CN":"为安全管理，玄关设有监控摄像头。","zh-TW":"為安全管理，玄關設有監視攝影機。",ko:"방범・안전 관리를 위해 현관에 방범 카메라가 설치되어 있습니다."},
   sec_3:{ja:"人数の変更やご事情がある場合は、事前にご相談いただけましたら幸いです。",en:"If the number of guests changes, please let us know in advance.","zh-CN":"如人数有变动，请事先与我们联系。","zh-TW":"如人數有變動，請事先與我們聯絡。",ko:"인원 변경이나 사정이 있으시면 사전에 상담해 주시면 감사하겠습니다."},
 
-  /* --- 夜と自然 --- */
   night_1:{ja:"21時以降は、近隣への配慮のため窓を閉めて静かにお過ごしください。",en:"After 21:00, please close the windows and keep noise down out of consideration for our neighbours.","zh-CN":"21点以后，为顾及邻近住户，请关闭窗户并保持安静。","zh-TW":"21點以後，為顧及鄰近住戶，請關閉窗戶並保持安靜。",ko:"21시 이후에는 이웃을 배려하여 창문을 닫고 조용히 지내주시기 바랍니다."},
   night_2:{ja:"izu high village は自然に囲まれた場所にあります。季節や天候によっては室内に虫が入ってくることがあります。",en:"izu high village sits in a nature-rich area. Depending on the season or weather, insects may come indoors.","zh-CN":"izu high village 位于自然环绕之地。视季节与天气，室内可能会有虫子进入。","zh-TW":"izu high village 位於自然環繞之地。視季節與天氣，室內可能會有蟲子進入。",ko:"izu high village는 자연에 둘러싸인 곳에 있습니다. 계절이나 날씨에 따라 실내에 벌레가 들어올 수 있습니다."},
   night_3:{ja:"玄関・リビング・ダイニングの棚に殺虫剤をご用意していますので、必要に応じてご利用ください。",en:"Insect spray is on the shelves in the entrance, living room and dining area — please use it as needed.","zh-CN":"玄关、客厅、餐厅的架子上备有杀虫剂，请按需使用。","zh-TW":"玄關、客廳、餐廳的架子上備有殺蟲劑，請按需使用。",ko:"현관・거실・다이닝 선반에 살충제를 준비해 두었으니 필요에 따라 사용해 주세요."},
 
-  /* --- 駐車 --- */
   park_1:{ja:"建物前が駐車スペースになります。道路が少し狭いため、ゆっくりお進みください。",en:"Parking is in front of the building. The road is a little narrow, so please drive slowly.","zh-CN":"停车位于建筑物前方。道路略窄，请缓慢行驶。","zh-TW":"停車位於建築物前方。道路略窄，請緩慢行駛。",ko:"건물 앞이 주차 공간입니다. 도로가 다소 좁으니 천천히 진입해 주세요."},
   park_2:{ja:"玄関ドアを開けるため、建物側に寄せすぎず、少し余裕をもって停めてください。",en:"Please leave space to open the entrance door — don't park too close to the building.","zh-CN":"为便于开启玄关门，请勿过于靠近建筑物停车，留出一些空间。","zh-TW":"為便於開啟玄關門，請勿過於靠近建築物停車，留出一些空間。",ko:"현관문을 열 수 있도록 건물 쪽으로 너무 붙이지 말고 여유를 두고 주차해 주세요."},
   park_3:{ja:"敷地内の駐車は基本的に1台分です。軽自動車のように車体が小さい場合は2台目も可能なことがありますが、状況に応じてお客様ご自身のご判断でお願いいたします。",en:"On-site parking is basically for one car. A second small car (a kei car, for example) may fit, but please judge for yourself depending on the situation.","zh-CN":"场地内停车原则上为1辆。若为轻型车等小型车辆，有时可停第2辆，但请视情况自行判断。","zh-TW":"場地內停車原則上為1輛。若為輕型車等小型車輛，有時可停第2輛，但請視情況自行判斷。",ko:"부지 내 주차는 기본적으로 1대분입니다. 경차처럼 차체가 작은 경우 2대째도 가능할 수 있으나 상황에 따라 직접 판단해 주시기 바랍니다."},
   park_4:{ja:"少しでも不安を感じる場合は、宇佐美駅近くの有料コインパーキングのご利用をおすすめします。",en:"If you feel at all unsure, we recommend the paid parking near Usami Station.","zh-CN":"若有任何不安，建议使用宇佐美站附近的付费停车场。","zh-TW":"若有任何不安，建議使用宇佐美站附近的付費停車場。",ko:"조금이라도 불안하시면 우사미역 근처의 유료 코인 주차장 이용을 권해드립니다."},
 
-  /* --- チェックアウト --- */
   co_1:{ja:"チェックアウトは10:00までです。",en:"Check-out is by 10:00.","zh-CN":"退房时间为10:00前。","zh-TW":"退房時間為10:00前。",ko:"체크아웃은 10:00까지입니다."},
   co_2:{ja:"アーリーチェックイン／レイトチェックアウト（有料）をご希望の場合は、空き状況によりご案内しますので事前にご相談ください。",en:"Early check-in and late check-out are available for a fee, subject to availability — please ask in advance.","zh-CN":"如需提前入住／延迟退房（付费），将视空房情况安排，请事先咨询。","zh-TW":"如需提前入住／延遲退房（付費），將視空房情況安排，請事先洽詢。",ko:"얼리 체크인／레이트 체크아웃(유료)을 원하시면 공실 상황에 따라 안내드리니 미리 상담해 주세요."},
   co_3:{ja:"退出時の詳しい手順は、ご予約サイトのメッセージでお送りしています。そちらをご確認ください。",en:"Detailed check-out instructions are sent to you through your booking site's messages. Please check there.","zh-CN":"退房的详细步骤已通过预订网站的消息发送给您，请查阅。","zh-TW":"退房的詳細步驟已透過訂房網站的訊息發送給您，請查閱。",ko:"퇴실 시 자세한 절차는 예약 사이트 메시지로 보내드립니다. 그쪽을 확인해 주세요."},
   co_thanks:{ja:"izu high village にご宿泊いただき、ありがとうございました。また伊豆を訪れる機会がありましたら、ぜひお立ち寄りください。",en:"Thank you for staying at izu high village. We look forward to welcoming you again.","zh-CN":"感谢您入住 izu high village。若再有机会造访伊豆，欢迎再次光临。","zh-TW":"感謝您入住 izu high village。若再有機會造訪伊豆，歡迎再次光臨。",ko:"izu high village에 묵어주셔서 감사합니다. 다시 이즈를 찾으실 기회가 있다면 꼭 들러주세요."},
 
-  /* --- MAP --- */
   map_1:{ja:"この宿周辺のおすすめ店舗をGoogleマップにまとめています。",en:"We've collected our recommended places nearby on Google Maps.","zh-CN":"我们已将周边推荐店铺整理在Google地图上。","zh-TW":"我們已將周邊推薦店家整理在Google地圖上。",ko:"숙소 주변 추천 가게를 Google 지도에 정리해 두었습니다."},
   map_2:{ja:"営業時間や定休日は変更になる場合があります。最新情報はGoogleマップをご確認ください。",en:"Opening hours and closing days may change. Please check Google Maps for the latest.","zh-CN":"营业时间与公休日可能变更，最新信息请查看Google地图。","zh-TW":"營業時間與公休日可能變更，最新資訊請查看Google地圖。",ko:"영업시간과 휴무일은 변경될 수 있습니다. 최신 정보는 Google 지도를 확인해 주세요."},
 
-  /* --- おすすめのお店 --- */
   shops_lead:{ja:"あえてたくさんの飲食店はご紹介していません。私たち自身が実際に足を運び、「ここでいい」と思える場所だけを載せています。",en:"We deliberately list only a few places — ones we've been to ourselves and would happily go back to."},
   shops_buy:{ja:"買い出しについて（重要）",en:"Shopping for food (important)"},
   shops_buy_note:{ja:"徒歩圏内にスーパーやコンビニはありません。夜は周辺が暗くなるため、チェックイン前や明るいうちに買い出しを済ませておくことをおすすめします。BBQや自炊をご予定の方は、食材・飲み物を多めにご準備ください。",en:"There are no shops within walking distance, and it gets dark around the house at night. We recommend shopping before check-in or while it's still light. If you plan to barbecue or cook, buy more than you think you need."},
@@ -550,7 +539,6 @@ var T={
   s_fushimi:{ja:"12席ほどの小さな食堂。干物やお刺身が美味しく、地元の人が通う雰囲気です。席数が少ないため早めの来店がおすすめ。",en:"A small diner with about 12 seats. Good dried fish and sashimi, and a local rather than touristy feel. Go early — it fills up."},
   s_usami:{ja:"宿から車で約7分の海岸。駐車場が近くにあり立ち寄りやすい場所です。サーファーが多く、伊豆らしい海の景色を感じられます。",en:"A beach about seven minutes away by car, with parking close by. Popular with surfers and a good spot for a short break."},
 
-  /* --- お知らせ・アンケート --- */
   news_empty:{ja:"現在、お知らせはありません。",en:"No notices at the moment.","zh-CN":"目前没有通知。","zh-TW":"目前沒有通知。",ko:"현재 공지사항이 없습니다."},
   survey_1:{ja:"ご滞在ありがとうございました。感じたことを教えていただけたら嬉しいです。",en:"Thank you for staying with us. If you enjoyed your stay, we would love to hear your thoughts.","zh-CN":"感谢您的入住。若能告诉我们您的感受，我们将非常高兴。","zh-TW":"感謝您的入住。若能告訴我們您的感受，我們將非常高興。",ko:"머물러 주셔서 감사합니다. 느끼신 점을 알려주시면 기쁘겠습니다."},
 
@@ -575,7 +563,18 @@ var T={
   washer_lead:{ja:"洗剤は本体内のタンクから自動で投入されるコースがあります。柔軟剤は手動です。",en:"Some courses dispense detergent automatically from the built-in tank. Fabric softener is added manually.","zh-CN":"部分模式会从机身内水箱自动投放洗涤剂，柔顺剂需手动投放。","zh-TW":"部分模式會從機身內水箱自動投放洗滌劑，柔軟精需手動投放。",ko:"일부 코스는 본체 내 탱크에서 세제가 자동 투입됩니다. 섬유유연제는 직접 넣어 주세요."},
   sofamat_lead:{ja:"床に敷いて使う簡易ベッドの広げ方と、布団・枕の保管場所です。",en:"How to unfold the floor mattress, and where the futons and pillows are stored.","zh-CN":"铺在地板上的简易床的展开方法，以及被褥・枕头的收纳位置。","zh-TW":"鋪在地板上的簡易床的展開方法，以及被褥・枕頭的收納位置。",ko:"바닥에 까는 간이 침대를 펼치는 방법과 이불・베개 보관 장소입니다."},
   btn_guide_page:{ja:"写真つきの手順を見る",en:"See the step-by-step guide with photos","zh-CN":"查看附照片的步骤说明","zh-TW":"查看附照片的步驟說明",ko:"사진이 있는 순서 보기"},
-  btn_ito:{ja:"伊東観光協会のサイトを見る",en:"Visit the Ito Tourism Association site","zh-CN":"访问伊东观光协会网站","zh-TW":"造訪伊東觀光協會網站",ko:"이토관광협회 사이트 보기"}
+  btn_ito:{ja:"伊東観光協会のサイトを見る",en:"Visit the Ito Tourism Association site","zh-CN":"访问伊东观光协会网站","zh-TW":"造訪伊東觀光協會網站",ko:"이토관광협회 사이트 보기"},
+
+  houserules:{ja:"ハウスルール",en:"House rules","zh-CN":"住宿规则","zh-TW":"住宿規則",ko:"하우스 룰"},
+  hr_smoke:{ja:"室内は禁煙です。",en:"No smoking indoors.","zh-CN":"室内禁烟。","zh-TW":"室內禁菸。",ko:"실내는 금연입니다."},
+  hr_pet:{ja:"ペット同伴OK（要事前リクエスト・追加料金あり）",en:"Pets allowed (advance request required, additional fee applies)","zh-CN":"可携带宠物（需事先申请・需另付费用）","zh-TW":"可攜帶寵物（需事先申請・需另付費用）",ko:"반려동물 동반 가능（사전 요청 필요・추가 요금 있음）"},
+  hr_party:{ja:"パーティー・イベントはお断りしております。",en:"Parties and events are not permitted.","zh-CN":"谢绝举办派对或活动。","zh-TW":"謝絕舉辦派對或活動。",ko:"파티・행사는 받지 않습니다."},
+  hr_quiet:{ja:"静かにしていただきたい時間帯：21:00〜翌8:00",en:"Please keep quiet between 21:00 and 8:00.","zh-CN":"请于21:00〜次日8:00保持安静。","zh-TW":"請於21:00〜次日8:00保持安靜。",ko:"조용히 해주셔야 하는 시간대: 21:00〜다음날 8:00"},
+  hr_age:{ja:"年齢制限はありません。",en:"No age restrictions.","zh-CN":"无年龄限制。","zh-TW":"無年齡限制。",ko:"연령 제한은 없습니다."},
+  hr_curfew:{ja:"門限はありません。",en:"No curfew.","zh-CN":"无门禁时间。","zh-TW":"無門禁時間。",ko:"통금 시간은 없습니다."},
+
+  fee_alert_title:{ja:"追加料金が発生します",en:"An additional fee applies","zh-CN":"将产生额外费用","zh-TW":"將產生額外費用",ko:"추가 요금이 발생합니다"},
+  fee_confirm_btn:{ja:"確認しました",en:"I understand","zh-CN":"我已了解","zh-TW":"我已了解",ko:"확인했습니다"}
 };
 
 var GAS_URL="https://script.google.com/macros/s/AKfycbyCcw4NL3As3JaNTPy-ZovrjXj3vCmzgQvhsUHcYGNDTUETn2s1kj159G6Jy3v9W65b/exec";
@@ -590,13 +589,11 @@ function fill(s){ return '<p><span class="fill">'+s+'</span></p>'; }
 function btn(url,key){
   return '<a class="linkbtn" href="'+url+'" target="_blank" rel="noopener">'+t(key)+'<span class="chev"></span></a>';
 }
-// 別ページへのリンク。アプリで選んだ言語を ?lang= で引き継ぐ
 function pbtn(file,key){ return btn(file+"?lang="+lang,key); }
 function shop(name,meta,descKey){
   return '<div class="shop"><b>'+name+'</b><em>'+meta+'</em><span>'+t(descKey)+'</span></div>';
 }
 
-/* 【要記入】は運営側のメモなので日本語のまま固定 */
 function content(key){
   switch(key){
 
@@ -609,7 +606,7 @@ function content(key){
     '<div class="kv"><span class="k">'+t("network")+'</span><span class="v" id="ssid24">izu_high_village_g</span><button class="copy" data-copy="ssid24">'+t("copy")+'</button></div>'+
     '<div class="kv"><span class="k">'+t("password")+'</span><span class="v" id="pass24">izuhighvillage</span><button class="copy" data-copy="pass24">'+t("copy")+'</button></div>'+
     ''};
-      
+
   case "sos": return {title:t("contact"), body:
     h("h_question")+p("sos_1")+
     h("h_emergency")+p("sos_2")+
@@ -638,7 +635,7 @@ function content(key){
     p("washer_lead")+
     pbtn("washer.html","btn_guide_page")};
 
-    case "doorlock": return {title:t("doorlock"), body:
+  case "doorlock": return {title:t("doorlock"), body:
     p("door_lead")+
     pbtn("door-lock.html","btn_guide_page")};
 
@@ -652,7 +649,18 @@ function content(key){
 
   case "sofabed": return {title:t("sofabed"), body:
     fill("【要記入：ソファベッドの展開手順。写真か短い動画があると伝わります】")};
-  
+
+  case "houserules": return {title:t("houserules"), body:
+    '<ul style="padding-left:1.2em;margin:0">'+
+      '<li style="margin-bottom:10px">'+t("basic_1")+'</li>'+
+      '<li style="margin-bottom:10px">'+t("hr_smoke")+'</li>'+
+      '<li style="margin-bottom:10px">'+t("hr_pet")+'</li>'+
+      '<li style="margin-bottom:10px">'+t("hr_party")+'</li>'+
+      '<li style="margin-bottom:10px">'+t("hr_quiet")+'</li>'+
+      '<li style="margin-bottom:10px">'+t("hr_age")+'</li>'+
+      '<li>'+t("hr_curfew")+'</li>'+
+    '</ul>'};
+
   case "photo": return {title:t("photo"), body:
     '<button class="howto" id="howtobtn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 114 2.1c-.9.6-1.6 1.1-1.6 2.2M12 16.8v.4"/></svg>'+t("photo_howto")+'</button>'+
     '<div id="howtobox" hidden><ol class="steps">'+
@@ -686,7 +694,11 @@ function content(key){
     h("h_toilet")+p("toilet_1")+p("toilet_2")};
 
   case "bbq": return {title:t("bbq"), body:
-    '<div class="callout">'+t("bbq_fee")+'</div>'+
+    '<div class="feegate" id="feegate">'+
+      '<div class="callout warn" style="border-left-color:var(--red)"><b style="color:var(--red)">'+t("fee_alert_title")+'</b><br>'+t("bbq_fee")+'</div>'+
+      '<button class="send" id="feeok">'+t("fee_confirm_btn")+'</button>'+
+    '</div>'+
+    '<div id="feehidden" hidden>'+
     p("bbq_notice")+p("bbq_time")+
     h("h_kit")+p("bbq_kit")+
     btn("https://www.youtube.com/watch?v=rD7sUqRs6uE","btn_fire_video")+
@@ -701,12 +713,19 @@ function content(key){
     '</ol>'+
     '<p style="font-size:13px;color:var(--ink-2)">'+t("stool_fold")+'</p>'+
     '<div class="callout warn">'+t("stool_note")+'</div>'+
-    btn("https://drive.google.com/file/d/1p6fOn11X0AXYna9BO3Hc50ufJuOUQRxq/view?usp=drive_link","btn_stool_pdf")};
-      
+    btn("https://drive.google.com/file/d/1p6fOn11X0AXYna9BO3Hc50ufJuOUQRxq/view?usp=drive_link","btn_stool_pdf")+
+    '</div>'};
+
   case "dog": return {title:t("dog"), body:
-    p("dog_1")+p("dog_fee")+
-    '<div class="callout warn">'+t("dog_notice")+'</div>'+
-    p("dog_2")+p("dog_3")+p("dog_4")};
+    '<div class="feegate" id="feegate">'+
+      '<div class="callout warn" style="border-left-color:var(--red)"><b style="color:var(--red)">'+t("fee_alert_title")+'</b><br>'+t("dog_fee")+'</div>'+
+      '<button class="send" id="feeok">'+t("fee_confirm_btn")+'</button>'+
+    '</div>'+
+    '<div id="feehidden" hidden>'+
+      p("dog_1")+
+      '<div class="callout warn">'+t("dog_notice")+'</div>'+
+      p("dog_2")+p("dog_3")+p("dog_4")+
+    '</div>'};
 
   case "inside": return {title:t("inside"), body:
     p("in_1")+p("in_2")+p("in_3")+
@@ -767,7 +786,18 @@ var sheet=document.getElementById("sheet"),
 
 function show(key){
   var c=content(key); if(!c) return;
-  current=key; sTitle.textContent=c.title; sBody.innerHTML=c.body; bindCopy(); bindPhoto();
+  current=key; sTitle.textContent=c.title; sBody.innerHTML=c.body; bindCopy(); bindPhoto(); bindFeeGate();
+}
+
+function bindFeeGate(){
+  var gate=document.getElementById("feegate"), hidden=document.getElementById("feehidden"), fbtn=document.getElementById("feeok");
+  if(!gate||!hidden||!fbtn) return;
+  var key="ihv_fee_"+current;
+  try{ if(localStorage.getItem(key)){ gate.hidden=true; hidden.hidden=false; return; } }catch(e){}
+  fbtn.addEventListener("click", function(){
+    try{ localStorage.setItem(key,"1"); }catch(e){}
+    gate.hidden=true; hidden.hidden=false;
+  });
 }
 
 function bindPhoto(){
@@ -827,7 +857,6 @@ function bindPhoto(){
 
 var photoFile=null, photoCat=null;
 
-// 長辺を max px に縮めて JPEG の base64 を返す
 function shrink(file,max,q){
   return new Promise(function(res,rej){
     var url=URL.createObjectURL(file), img=new Image();
@@ -892,14 +921,12 @@ document.getElementById("menubtn").addEventListener("click",function(){ open("in
   else if(n.indexOf("ja")===0) lang="ja";
   else lang="en";
 })();
-/* ===== 滞在状況の表示 ===== */
 var stay=null;
 function jst(ms){ var d=new Date(ms+9*3600000); return {m:d.getUTCMonth()+1,d:d.getUTCDate(),hm:("0"+d.getUTCHours()).slice(-2)+":"+("0"+d.getUTCMinutes()).slice(-2)}; }
 function jday(ms){ return Math.floor((ms+9*3600000)/86400000); }
 function jstHour(ms){ return new Date(ms+9*3600000).getUTCHours(); }
 
-// 「出発します」ボタンを当日いつまで出すか（時、0-23）。null なら終日表示
-var CHECKOUT_BUTTON_LIMIT_HOUR = null; // 例：12 にすると12:00までに制限
+var CHECKOUT_BUTTON_LIMIT_HOUR = null;
 function fmt(str,o){ return str.replace(/\{(\w+)\}/g,function(_,k){ return o[k]; }); }
 
 function renderStay(){
@@ -939,14 +966,13 @@ function bindCk(){
   if(bi) bi.addEventListener("click", function(){ sendCk("checkin", bi); });
   if(bo) bo.addEventListener("click", function(){ sendCk("checkout", bo); });
 }
-function sendCk(action, btn){
-  btn.disabled=true;
+function sendCk(action, abtn){
+  abtn.disabled=true;
   fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({token:GAS_TOKEN,action:action})})
-    .then(function(){ btn.textContent=t("ck_sent"); })
-    .catch(function(){ btn.disabled=false; });
+    .then(function(){ abtn.textContent=t("ck_sent"); })
+    .catch(function(){ abtn.disabled=false; });
 }
 
-// ?in=2026-10-03（2026/10/03, 20261003 も可）→ その予約。なければ今日の予約。一度受け取った日付は端末に覚えさせる
 (function(){
   var KEY="ihv_stay", reqIn=null, reqCode=null, saved=null;
   try{ saved=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
