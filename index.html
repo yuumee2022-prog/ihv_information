@@ -1040,7 +1040,7 @@ function sendCk(action, abtn){
   fetch(GAS_URL+"?code="+encodeURIComponent(reqCode)).then(function(r){ return r.json(); }).then(function(res){
     var s=(res&&res.ok&&res.stay)?res.stay:null;
     try{ localStorage.setItem(KEY,JSON.stringify({code:reqCode,co:s?s.co:null})); }catch(e){}
-if(s){ stay=s; stay.key=(res.key||""); renderStay(); }
+if(s){ stay=s; stay.key=(res.key||""); renderStay(); if(current==="key"){ show("key"); } }
   }).catch(function(){});
 })();
 
