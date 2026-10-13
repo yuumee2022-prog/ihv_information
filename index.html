@@ -206,6 +206,9 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
       <span id="stayS"></span>
     </div>
     <button class="topbtn" id="langbtn" aria-label="Language"><span id="langlabel">あA<br>JP</span></button>
+    <button class="topbtn plain" id="helpbtn" aria-label="Help">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 006 6l1.5-2 4 1.5v3a1.5 1.5 0 01-1.7 1.5C11 19.5 4.5 13 3.7 5.2A1.5 1.5 0 015.2 3.5z"/></svg>
+    </button>
     <button class="topbtn plain" id="menubtn" aria-label="menu">
       <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -381,7 +384,7 @@ var T={
   st_thanks_t:{ja:"ご宿泊ありがとうございました",en:"Thank you for staying","zh-CN":"感谢您的入住","zh-TW":"感謝您的入住",ko:"머물러 주셔서 감사합니다"},
   ck_in_btn:{ja:"チェックインしました",en:"I've arrived","zh-CN":"已到达","zh-TW":"已到達",ko:"도착했습니다"},
   ck_out_btn:{ja:"チェックアウトしました",en:"I'm leaving","zh-CN":"即将出发","zh-TW":"即將出發",ko:"출발합니다"},  ck_sent:{ja:"送信済み",en:"Sent","zh-CN":"已发送","zh-TW":"已傳送",ko:"전송됨"},
-  contact:{ja:"連絡する",en:"Contact","zh-CN":"联系我们","zh-TW":"聯絡我們",ko:"문의하기"},
+  contact:{ja:"お困りのとき",en:"Need help?","zh-CN":"需要帮助？","zh-TW":"需要協助？",ko:"도움이 필요하세요?"},
   small:{ja:"小",en:"Small","zh-CN":"小","zh-TW":"小",ko:"작게"},
   large:{ja:"大",en:"Large","zh-CN":"大","zh-TW":"大",ko:"크게"},
   guide:{ja:"設備・備品",en:"Amenities","zh-CN":"设施・备品","zh-TW":"設施・備品",ko:"설비・비품"},
@@ -546,6 +549,19 @@ var T={
   h_emergency:{ja:"緊急時",en:"Emergencies","zh-CN":"紧急情况","zh-TW":"緊急情況",ko:"긴급 시"},
   tel_emergency:{ja:"070-6450-0371 に電話",en:"Call 070-6450-0371","zh-CN":"拨打 070-6450-0371","zh-TW":"撥打 070-6450-0371",ko:"070-6450-0371로 전화"},
   plusline_name:{ja:"プラスライン株式会社（管理会社）",en:"Plusline Inc. (property manager)","zh-CN":"Plusline株式会社（管理公司）","zh-TW":"Plusline株式會社（管理公司）",ko:"Plusline 주식회사(관리회사)"},
+  leak_warn:{ja:"水が漏れている、床や壁が濡れている、水が止まらない、排水が流れないときは、使うのをやめて、すぐにご連絡ください。",en:"If water is leaking, floors or walls are wet, water will not stop, or a drain is blocked, please stop using it and contact us right away.","zh-CN":"如发现漏水、地板或墙壁潮湿、水流不止或排水不畅，请立即停止使用并尽快联系我们。","zh-TW":"如發現漏水、地板或牆壁潮濕、水流不止或排水不順，請立即停止使用並盡快聯絡我們。",ko:"물이 새거나, 바닥이나 벽이 젖어 있거나, 물이 멈추지 않거나, 배수가 되지 않을 때는 사용을 중단하고 즉시 연락해 주세요."},
+  leak_link:{ja:"お困りのときの連絡先を見る",en:"See how to contact us","zh-CN":"查看联系方式","zh-TW":"查看聯絡方式",ko:"연락처 보기"},
+  help_urgent_h:{ja:"お急ぎのとき（水漏れ、停電、鍵が開かないなど）",en:"Urgent (water leak, power outage, cannot unlock the door)","zh-CN":"紧急情况（漏水、停电、打不开门锁等）","zh-TW":"緊急情況（漏水、停電、打不開門鎖等）",ko:"긴급 상황 (누수, 정전, 문이 열리지 않을 때 등)"},
+  help_urgent_p:{ja:"すぐに対応が必要なときは、お電話ください。"},
+  help_day:{ja:"8:00〜20:00　オペレーションセンター"},
+  tel_day:{ja:"050-1720-3760 に電話"},
+  help_day_note:{ja:"お電話の際は、施設名（izu high village）とチェックイン日をお伝えください。"},
+  help_night:{ja:"20:00〜翌8:00・緊急時"},
+  help_x_msg:{en:"Please send a message through your booking site. We reply between 8:00 and 20:00 (JST).","zh-CN":"请通过预订网站发送消息。我们会在8:00至20:00（日本时间）回复。","zh-TW":"請透過訂房網站傳送訊息。我們會在8:00至20:00（日本時間）回覆。",ko:"예약 사이트의 메시지로 연락해 주세요. 8:00~20:00(일본 시간)에 답변드립니다."},
+  help_x_night:{en:"At night (20:00–8:00) or in an emergency, you can call:","zh-CN":"夜间（20:00至次日8:00）或遇紧急情况，可拨打以下电话：","zh-TW":"夜間（20:00至次日8:00）或遇緊急情況，可撥打以下電話：",ko:"야간(20:00~다음날 8:00) 또는 긴급 시에는 아래 번호로 전화하실 수 있습니다."},
+  help_x_jaonly:{en:"Phone support is available in Japanese only. If you cannot get through, please send a message through your booking site, and we will reply the next morning.","zh-CN":"电话仅提供日语服务。如无法接通，请通过预订网站发送消息，我们将在次日早晨回复。","zh-TW":"電話僅提供日語服務。如無法接通，請透過訂房網站傳送訊息，我們將於隔日早晨回覆。",ko:"전화 응대는 일본어만 가능합니다. 연결되지 않으면 예약 사이트 메시지로 연락해 주세요. 다음 날 아침에 답변드리겠습니다."},
+  help_normal_h:{ja:"お急ぎでないとき",en:"Not urgent","zh-CN":"非紧急情况","zh-TW":"非緊急情況",ko:"긴급하지 않은 경우"},
+  help_normal_p:{ja:"ご予約サイトのメッセージ、またはこのアプリの「写真でコメント」をご利用ください（アプリではご返信ができません）。",en:"Please use your booking site messages, or “Photo feedback” in this app. We cannot reply inside the app.","zh-CN":"请使用预订网站的消息功能，或本应用的「照片留言」。本应用内无法回复。","zh-TW":"請使用訂房網站的訊息功能，或本應用程式的「照片留言」。本應用程式內無法回覆。",ko:"예약 사이트 메시지 또는 이 앱의 '사진 코멘트'를 이용해 주세요. 앱 안에서는 답변드릴 수 없습니다."},
 
   sightseeing:{ja:"観光案内",en:"Things to do","zh-CN":"观光指南","zh-TW":"觀光導覽",ko:"관광 안내"},
   sight_1:{ja:"伊東の観光情報は、伊東観光協会の公式サイトにまとまっています。季節のイベント、温泉、体験、見どころが探せます。",en:"The Ito Tourism Association's official site covers events, hot springs, activities and sights across the area.","zh-CN":"伊东的观光信息汇总于伊东观光协会官方网站，可查询季节活动、温泉、体验与景点。","zh-TW":"伊東的觀光資訊彙整於伊東觀光協會官方網站，可查詢季節活動、溫泉、體驗與景點。",ko:"이토의 관광 정보는 이토관광협회 공식 사이트에 정리되어 있습니다. 계절 이벤트, 온천, 체험, 볼거리를 찾을 수 있습니다."},
@@ -603,11 +619,22 @@ function content(key){
     ''};
 
   case "sos": return {title:t("contact"), body:
-    h("h_question")+p("sos_1")+
-    h("h_emergency")+p("sos_2")+
-    '<a class="tel" href="tel:07064500371">'+t("tel_emergency")+'</a>'+
-    '<p style="font-size:12.5px;color:var(--ink-2);margin-top:-4px">'+t("plusline_name")+'</p>'};
-
+    h("help_urgent_h")+
+    (lang==="ja" ?
+      p("help_urgent_p")+
+      '<p style="margin-bottom:6px"><b>'+t("help_day")+'</b></p>'+
+      '<a class="tel" href="tel:05017203760">'+t("tel_day")+'</a>'+
+      p("help_day_note")+
+      '<p style="margin:14px 0 6px"><b>'+t("help_night")+'</b></p>'+
+      '<a class="tel" href="tel:07064500371">'+t("tel_emergency")+'</a>'+
+      '<p style="font-size:12.5px;color:var(--ink-2);margin-top:-4px">'+t("plusline_name")+'</p>'
+    :
+      p("help_x_msg")+p("help_x_night")+
+      '<a class="tel" href="tel:07064500371">'+t("tel_emergency")+'</a>'+
+      p("help_x_jaonly")
+    )+
+    h("help_normal_h")+p("help_normal_p")};
+      
   case "guide": return {title:t("guide"), body:
     '<div class="callout">'+t("guide_lead")+'</div>'+
     h("h_basic")+p("basic_1")+p("basic_2")+
@@ -627,9 +654,10 @@ function content(key){
     p("night_1")+p("night_2")+p("night_3")};
 
   case "washer": return {title:t("washer"), body:
+    leakWarn()+
     p("washer_lead")+
     pbtn("washer.html","btn_guide_page")};
-
+      
   case "doorlock": return {title:t("doorlock"), body:
     p("door_lead")+
     pbtn("door-lock.html","btn_guide_page")};
@@ -685,9 +713,10 @@ function content(key){
     p("gomi_1")+'<ul><li>'+t("gomi_2")+'</li><li>'+t("gomi_3")+'</li></ul>'};
 
   case "bath": return {title:t("bath"), body:
+    leakWarn()+
     h("h_bath")+p("bath_1")+p("bath_2")+p("bath_3")+
     h("h_toilet")+p("toilet_1")+p("toilet_2")};
-
+      
   case "bbq": return {title:t("bbq"), body:
     '<div class="feegate" id="feegate">'+
       '<div class="callout warn" style="border-left-color:var(--red)"><b style="color:var(--red)">'+t("fee_alert_title")+'</b><br>'+t("bbq_fee")+'</div>'+
@@ -781,9 +810,22 @@ var sheet=document.getElementById("sheet"),
 
 function show(key){
   var c=content(key); if(!c) return;
-  current=key; sTitle.textContent=c.title; sBody.innerHTML=c.body; bindCopy(); bindPhoto(); bindFeeGate();
+  current=key; sTitle.textContent=c.title; sBody.innerHTML=c.body; bindCopy(); bindPhoto(); bindFeeGate(); bindGo();
 }
 
+function bindGo(){
+  var gs=sBody.querySelectorAll("[data-go]");
+  for(var i=0;i<gs.length;i++){
+    (function(a){
+      a.addEventListener("click",function(e){ e.preventDefault(); show(a.getAttribute("data-go")); sheet.scrollTop=0; });
+    })(gs[i]);
+  }
+}
+
+function leakWarn(){
+  return '<div class="callout warn" style="border-left-color:var(--red)">'+t("leak_warn")+
+    '<br><a href="#" data-go="sos" style="color:var(--accent-ink);font-weight:700">'+t("leak_link")+'</a></div>';
+}
 function bindFeeGate(){
   var gate=document.getElementById("feegate"), hidden=document.getElementById("feehidden"), fbtn=document.getElementById("feeok");
   if(!gate||!hidden||!fbtn) return;
@@ -908,6 +950,7 @@ document.getElementById("sizebtn").addEventListener("click",function(){
   document.documentElement.style.setProperty("--base", big ? "18.5px" : "16px");
 });
 document.getElementById("menubtn").addEventListener("click",function(){ open("inside"); });
+document.getElementById("helpbtn").addEventListener("click",function(){ open("sos"); });
 
 (function(){
   var n=(navigator.language||"ja").toLowerCase();
