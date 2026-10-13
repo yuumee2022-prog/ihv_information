@@ -1039,11 +1039,27 @@ function sendCk(action, abtn){
   if(c&&c.trim()) reqCode=c.trim();
   else if(saved&&saved.code) reqCode=saved.code;
   if(!reqCode) return;
-  fetch(GAS_URL+"?code="+encodeURIComponent(reqCode)).then(function(r){ return r.json(); }).then(function(res){
-    var s=(res&&res.ok&&res.stay)?res.stay:null;
-    try{ localStorage.setItem(KEY,JSON.stringify({code:reqCode,co:s?s.co:null})); }catch(e){}
-if(s){ stay=s; stay.key=(res.key||""); renderStay(); if(current==="key"){ show("key"); } }
-  }).catch(function(){});
+  var timer=null;
+  function load(){
+    fetch(GAS_URL+"?code="+encodeURIComponent(reqCode)).then(function(r){ return r.json(); }).then(function(res){
+      var s=(res&&res.ok&&res.stay)?res.stay:null;
+      try{ localStorage.setItem(KEY,JSON.stringify({code:reqCode,co:s?s.co:null})); }catch(e){}
+      if(s){
+        stay=s; stay.key=(res.key||""); renderStay();
+        if(current==="key"){ show("key"); }
+        clearTimeout(timer);
+        if(!stay.key && Date.now()<stay.ci){
+          var wait=Math.min(Math.max(stay.ci-5*60*1000-Date.now()+3000,30000),3600000);
+          timer=setTimeout(load,wait);
+        }
+      }
+    }).catch(function(){});
+  }
+  document.addEventListener("visibilitychange",function(){
+    var n=Date.now();
+    if(!document.hidden && stay && !stay.key && n>=stay.ci-5*60*1000 && n<stay.co) load();
+  });
+  load();
 })();
 
 bindCk();
