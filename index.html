@@ -833,8 +833,10 @@ function keyBody(){
   var now=Date.now();
   if(!stay) return p("key_nolink");
   if(now>=stay.co) return p("key_after");
-  if(now<stay.ci){ var ci=jst(stay.ci); return p("key_before").replace("{d}",ci.m+"/"+ci.d).replace("{t}",ci.hm); }
-  if(!stay.key) return p("key_none");
+  if(!stay.key){
+    if(now<stay.ci){ var ci=jst(stay.ci); return p("key_before").replace("{d}",ci.m+"/"+ci.d).replace("{t}",ci.hm); }
+    return p("key_none");
+  }
   return '<div class="kv"><span class="v" id="keyval" style="font-size:34px;font-weight:700;letter-spacing:.12em">'+stay.key+'</span><button class="copy" data-copy="keyval">'+t("copy")+'</button></div>'+
     '<a href="#" data-go="doorlock" style="color:var(--accent-ink);font-weight:700">'+t("key_how")+'</a>';
 }
