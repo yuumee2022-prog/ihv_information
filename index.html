@@ -591,6 +591,7 @@ var T={
   about_lead:{ja:"海が見える高台にある、一棟貸切の宿です。便利さや最新設備よりも、家族や仲間と過ごす時間を大切にしたい方に向けた宿です。",en:"A whole-house rental on a hill with a sea view. It is for guests who value time with family and friends over convenience and the latest facilities.","zh-CN":"这是一处位于可眺望大海的高地上的整栋包租住宿，适合重视与家人、朋友共度时光，而非便利性和最新设备的客人。","zh-TW":"這是一處位於可眺望大海的高地上的整棟包租住宿，適合重視與家人、朋友共度時光，而非便利性和最新設備的客人。",ko:"바다가 보이는 언덕 위의 독채 숙소입니다. 편리함이나 최신 설비보다 가족, 친구와 보내는 시간을 소중히 여기는 분들을 위한 숙소입니다."},
   about_h_loc:{ja:"立地について",en:"Location","zh-CN":"关于位置","zh-TW":"關於位置",ko:"위치"},
   about_loc:{ja:"市内中心部から離れた、自然の中の立地です。スーパーやコンビニは徒歩圏内にありませんが、お車でアクセスできます。必要なものは事前にご準備ください。",en:"The house is away from the city center, surrounded by nature. There are no supermarkets or convenience stores within walking distance, but they can be reached by car. Please bring what you need in advance.","zh-CN":"住宿远离市中心，周围是自然环境。步行范围内没有超市和便利店，但可驾车前往。所需物品请提前准备。","zh-TW":"住宿遠離市中心，周圍是自然環境。步行範圍內沒有超市和便利商店，但可開車前往。所需物品請提前準備。",ko:"시내 중심부에서 떨어진 자연 속에 있습니다. 도보권 내에 슈퍼나 편의점은 없지만 차로 이동할 수 있습니다. 필요한 물건은 미리 준비해 주세요."},
+  about_dist:{ja:"伊東駅から 6.8km（車で14分）／宇佐美駅から 3.2km（車で7分）（Googleマップ調べ）",en:"From Ito Station: 6.8 km (14 min by car) / From Usami Station: 3.2 km (7 min by car) (per Google Maps)","zh-CN":"距伊东站 6.8公里（驾车14分钟）／距宇佐美站 3.2公里（驾车7分钟）（据谷歌地图）","zh-TW":"距伊東站 6.8公里（開車14分鐘）／距宇佐美站 3.2公里（開車7分鐘）（依Google地圖）",ko:"이토역에서 6.8km(차로 14분) / 우사미역에서 3.2km(차로 7분) (구글 지도 기준)"},
   about_h_bld:{ja:"建物について",en:"The building","zh-CN":"关于建筑","zh-TW":"關於建築",ko:"건물"},
   about_bld:{ja:"建物は年数を重ねており、最新設備のホテルではありません。浴室に追い焚き機能はなく、季節によっては虫が出ることがあります。",en:"The building is older and is not a hotel with the latest facilities. The bath has no reheating function, and insects may appear depending on the season.","zh-CN":"建筑已有一定年头，并非配备最新设备的酒店。浴室没有追焚功能，部分季节可能会有虫子出现。","zh-TW":"建築已有一定年頭，並非配備最新設備的飯店。浴室沒有追焚功能，部分季節可能會有蟲子出現。",ko:"건물은 오래되어 최신 설비를 갖춘 호텔이 아닙니다. 욕실에는 추가 가열(추가 데우기) 기능이 없으며, 계절에 따라 벌레가 나올 수 있습니다."},
   about_h_opt:{ja:"オプションのご案内",en:"Options","zh-CN":"可选服务","zh-TW":"可選服務",ko:"옵션 안내"},
@@ -697,7 +698,7 @@ function content(key){
 
   case "about": return {title:t("about"), body:
     p("about_lead")+
-    h("about_h_loc")+p("about_loc")+
+    h("about_h_loc")+p("about_loc")+'<p style="font-size:13px;color:var(--ink-2)">'+t("about_dist")+'</p>'+
     h("about_h_bld")+p("about_bld")+
     h("about_h_opt")+
     '<ul style="padding-left:1.2em;margin:0 0 8px"><li style="margin-bottom:6px">'+t("about_opt1")+'</li><li>'+t("about_opt2")+'</li></ul>'+
