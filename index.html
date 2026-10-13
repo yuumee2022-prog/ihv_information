@@ -226,9 +226,9 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
         <i><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.4l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.8l6.1-.9z"/></svg></i>
         <b data-i18n="topics"></b>
       </button>
-      <button class="circ" data-open="bbq">
-        <i><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linejoin="round"><path d="M15.2 2.8l6 6-12.4 12.4-6-6z"/><path d="M11.4 6.9l1.5 1.5M8.6 9.7l1.5 1.5M5.8 12.5l1.5 1.5"/></svg></i>
-        <b data-i18n="ticket"></b>
+      <button class="circ" data-open="key">
+        <i><svg viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg></i>
+        <b data-i18n="keyno"></b>
       </button>
     </div>
   </div>
@@ -567,6 +567,12 @@ var T={
   sight_1:{ja:"伊東の観光情報は、伊東観光協会の公式サイトにまとまっています。季節のイベント、温泉、体験、見どころが探せます。",en:"The Ito Tourism Association's official site covers events, hot springs, activities and sights across the area.","zh-CN":"伊东的观光信息汇总于伊东观光协会官方网站，可查询季节活动、温泉、体验与景点。","zh-TW":"伊東的觀光資訊彙整於伊東觀光協會官方網站，可查詢季節活動、溫泉、體驗與景點。",ko:"이토의 관광 정보는 이토관광협회 공식 사이트에 정리되어 있습니다. 계절 이벤트, 온천, 체험, 볼거리를 찾을 수 있습니다."},
 
   doorlock:{ja:"玄関の開け方",en:"Opening the door","zh-CN":"玄关开锁","zh-TW":"玄關開鎖",ko:"현관문 열기"},
+  keyno:{ja:"鍵番号",en:"Key code","zh-CN":"门锁密码","zh-TW":"門鎖密碼",ko:"도어락 번호"},
+  key_nolink:{ja:"ご予約専用のリンクから開くと、ご滞在中にここへ鍵番号が表示されます。",en:"Open this app from your personal booking link, and your key code will appear here during your stay.","zh-CN":"请从您的专属预订链接打开本应用，入住期间门锁密码将显示在此处。","zh-TW":"請從您的專屬訂房連結開啟本應用，入住期間門鎖密碼將顯示於此。",ko:"예약 전용 링크로 이 앱을 열면 숙박 중 도어락 번호가 여기에 표시됩니다."},
+  key_before:{ja:"鍵番号は、チェックイン時刻（{d} {t}）から表示されます。",en:"Your key code will appear from check-in time ({d} {t}).","zh-CN":"门锁密码将从入住时间（{d} {t}）起显示。","zh-TW":"門鎖密碼將從入住時間（{d} {t}）起顯示。",ko:"도어락 번호는 체크인 시간({d} {t})부터 표시됩니다."},
+  key_after:{ja:"ご滞在は終了しました。ありがとうございました。",en:"Your stay has ended. Thank you.","zh-CN":"您的住宿已结束，感谢您的光临。","zh-TW":"您的住宿已結束，感謝您的光臨。",ko:"숙박이 종료되었습니다. 감사합니다."},
+  key_none:{ja:"鍵番号を表示できません。「お困りのとき」からご連絡ください。",en:"We could not show the key code. Please use \"Need help?\" to contact us.","zh-CN":"无法显示门锁密码，请通过“需要帮助？”联系我们。","zh-TW":"無法顯示門鎖密碼，請透過「需要協助？」聯絡我們。",ko:"도어락 번호를 표시할 수 없습니다. '도움이 필요하세요?'에서 연락해 주세요."},
+  key_how:{ja:"開け方を見る",en:"How to open the door","zh-CN":"查看开锁方法","zh-TW":"查看開鎖方法",ko:"여는 방법 보기"},
   gasmeter:{ja:"ガスメーター",en:"Gas meter reset","zh-CN":"燃气表复位","zh-TW":"瓦斯錶復位",ko:"가스 계량기 복구"},
   sofamat:{ja:"ソファマットレス",en:"Sofa mattress","zh-CN":"沙发床垫","zh-TW":"沙發床墊",ko:"소파 매트리스"},
   door_lead:{ja:"暗証番号を押したあと、つまみ（サムターン）を右に回すと解錠します。",en:"After entering the code, turn the knob (thumb-turn) to the right to unlock.","zh-CN":"输入密码后，将旋钮（拇指锁）向右转动即可开锁。","zh-TW":"輸入密碼後，將旋鈕（拇指鎖）向右轉動即可開鎖。",ko:"비밀번호를 누른 후 손잡이(섬턴)를 오른쪽으로 돌리면 열립니다."},
@@ -635,6 +641,7 @@ function content(key){
     )+
     h("help_normal_h")+p("help_normal_p")};
       
+  case "key": return {title:t("keyno"), body: keyBody()};
   case "guide": return {title:t("guide"), body:
     '<div class="callout">'+t("guide_lead")+'</div>'+
     h("h_basic")+p("basic_1")+p("basic_2")+
@@ -822,6 +829,16 @@ function bindGo(){
   }
 }
 
+function keyBody(){
+  var now=Date.now();
+  if(!stay) return p("key_nolink");
+  if(now>=stay.co) return p("key_after");
+  if(now<stay.ci){ var ci=jst(stay.ci); return p("key_before").replace("{d}",ci.m+"/"+ci.d).replace("{t}",ci.hm); }
+  if(!stay.key) return p("key_none");
+  return '<div class="kv"><span class="v" id="keyval" style="font-size:34px;font-weight:700;letter-spacing:.12em">'+stay.key+'</span><button class="copy" data-copy="keyval">'+t("copy")+'</button></div>'+
+    '<a href="#" data-go="doorlock" style="color:var(--accent-ink);font-weight:700">'+t("key_how")+'</a>';
+}
+  
 function leakWarn(){
   return '<div class="callout warn" style="border-left-color:var(--red)">'+t("leak_warn")+
     '<br><a href="#" data-go="sos" style="color:var(--accent-ink);font-weight:700">'+t("leak_link")+'</a></div>';
@@ -1023,7 +1040,7 @@ function sendCk(action, abtn){
   fetch(GAS_URL+"?code="+encodeURIComponent(reqCode)).then(function(r){ return r.json(); }).then(function(res){
     var s=(res&&res.ok&&res.stay)?res.stay:null;
     try{ localStorage.setItem(KEY,JSON.stringify({code:reqCode,co:s?s.co:null})); }catch(e){}
-    if(s){ stay=s; renderStay(); }
+if(s){ stay=s; stay.key=(res.key||""); renderStay(); }
   }).catch(function(){});
 })();
 
