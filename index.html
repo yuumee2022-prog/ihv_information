@@ -1030,29 +1030,44 @@ function renderStay(){
   updateCkBar();
 }
 
+var ckTimer=null, ckBusy={};
+function ckKey(action){ return "ihv_ck_"+action+"_"+(action==="checkin"?stay.ci:stay.co); }
+function ckSent(action){ try{ return !!localStorage.getItem(ckKey(action)); }catch(e){ return false; } }
+function ckStart(){ return jday(stay.co)*86400000-9*3600000+4*3600000; }  // チェックアウト当日の4:00(JST)
+
 function updateCkBar(){
   var bar=document.getElementById("ckbar"), bi=document.getElementById("ckinbtn"), bo=document.getElementById("ckoutbtn");
   if(!bar) return;
+  clearTimeout(ckTimer);
   if(!stay){ bar.classList.remove("show"); return; }
   var now=Date.now();
-  var showIn = jday(now)===jday(stay.ci) && now<stay.co;
-  var showOut = jday(now)===jday(stay.co)
+  var showIn = now>=stay.ci-5*60*1000 && jday(now)===jday(stay.ci) && now<stay.co;
+  var showOut = jday(now)===jday(stay.co) && jstHour(now)>=4
     && (CHECKOUT_BUTTON_LIMIT_HOUR===null || jstHour(now) < CHECKOUT_BUTTON_LIMIT_HOUR);
   bar.classList.toggle("show", showIn||showOut);
   bi.style.display = showIn ? "" : "none";
   bo.style.display = showOut ? "" : "none";
+  var sIn=ckSent("checkin"), sOut=ckSent("checkout");
+  bi.disabled = sIn || !!ckBusy.checkin;  bi.textContent = t(sIn ? "ck_sent" : "ck_in_btn");
+  bo.disabled = sOut || !!ckBusy.checkout; bo.textContent = t(sOut ? "ck_sent" : "ck_out_btn");
+  // ボタンが出る・消える時刻になったら、画面を自動で更新する
+  var cand=[stay.ci-5*60*1000, stay.ci, ckStart(), stay.co], next=null;
+  for(var k=0;k<cand.length;k++){ if(cand[k]>now && (next===null||cand[k]<next)) next=cand[k]; }
+  if(next!==null) ckTimer=setTimeout(function(){ renderStay(); }, Math.min(next-now+1000, 3600000));
 }
 
 function bindCk(){
   var bi=document.getElementById("ckinbtn"), bo=document.getElementById("ckoutbtn");
   if(bi) bi.addEventListener("click", function(){ sendCk("checkin", bi); });
   if(bo) bo.addEventListener("click", function(){ sendCk("checkout", bo); });
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden && stay) renderStay(); });
 }
 function sendCk(action, abtn){
-  abtn.disabled=true;
+  if(!stay || ckSent(action) || ckBusy[action]) return;
+  ckBusy[action]=true; abtn.disabled=true;
   fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({token:GAS_TOKEN,action:action})})
-    .then(function(){ abtn.textContent=t("ck_sent"); })
-    .catch(function(){ abtn.disabled=false; });
+    .then(function(){ try{ localStorage.setItem(ckKey(action),"1"); }catch(e){} ckBusy[action]=false; updateCkBar(); })
+    .catch(function(){ ckBusy[action]=false; abtn.disabled=false; });
 }
 
 (function(){
