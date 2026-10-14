@@ -1085,7 +1085,14 @@ function sendCk(action, abtn){
       var s=(res&&res.ok&&res.stay)?res.stay:null;
       try{ localStorage.setItem(KEY,JSON.stringify({code:reqCode,co:s?s.co:null})); }catch(e){}
       if(s){
-        stay=s; stay.key=(res.key||""); renderStay();
+        stay=s; stay.key=(res.key||"");
+        if(res.sent){
+          try{
+            if(res.sent.checkin) localStorage.setItem("ihv_ck_checkin_"+s.ci,"1");
+            if(res.sent.checkout) localStorage.setItem("ihv_ck_checkout_"+s.co,"1");
+          }catch(e){}
+        }
+        renderStay();
         if(current==="key"){ show("key"); }
         clearTimeout(timer);
         if(!stay.key && Date.now()<stay.ci){
