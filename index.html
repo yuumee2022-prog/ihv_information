@@ -174,6 +174,15 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
 .ckbar.show{display:flex}
 .ckbtn{flex:1;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:11px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
 .ckbtn[disabled]{opacity:.5;cursor:default}
+.precheck{margin:0 12px 10px;padding:14px 15px;border:1px solid var(--edge);border-left:3px solid var(--red);border-radius:6px 12px 12px 6px;background:var(--sub);font-size:13.5px}
+.precheck.done{border-left-color:var(--accent);padding:10px 14px}
+.precheck h2{margin:0 0 6px;font-size:15px}
+.prelist{list-style:none;margin:10px 0 0;padding:0}
+.prelist li{margin-bottom:14px}
+.pcbtn{display:block;width:100%;margin-top:8px;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.pcok{display:block;margin-top:6px;color:var(--accent-ink);font-weight:700;font-size:13px}
+.prerow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.prelink{background:none;border:1px solid var(--edge);border-radius:99px;padding:6px 14px;font-size:13px;color:var(--accent-ink);font-family:inherit;cursor:pointer}
 .steps{counter-reset:st;margin:0 0 4px;padding:0;list-style:none}
 .steps li{counter-increment:st;display:flex;gap:12px;align-items:flex-start;margin-bottom:13px;font-size:14px}
 .steps li::before{content:counter(st);flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;display:grid;place-items:center}
@@ -219,6 +228,8 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
     <button class="ckbtn" id="ckoutbtn" data-i18n="ck_out_btn"></button>
   </div>
 
+  <div class="precheck" id="precheck" hidden></div>
+  
   <div class="hero">
     <div class="photo" role="img" aria-label="izu high village"></div>
     <div class="circles">
@@ -599,6 +610,17 @@ var T={
   about_opt2:{ja:"ペット同伴：有料（3,000円／滞在、3匹まで）",en:"Pets: paid (¥3,000 per stay, up to 3 pets)","zh-CN":"携带宠物：收费（每次住宿3,000日元，最多3只）","zh-TW":"攜帶寵物：收費（每次住宿3,000日圓，最多3隻）",ko:"반려동물 동반: 유료(1회 숙박 3,000엔, 최대 3마리)"},
   about_opt_note:{ja:"※オプションをご利用の際は、予約確定後、メッセージにて「ペット同伴有り」「BBQセット利用希望」とお知らせください。",en:"* To use an option, please tell us by message after your booking is confirmed (e.g. “With pet” or “BBQ set wanted”).","zh-CN":"※如需使用可选服务，请在预订确认后通过消息告知「携带宠物」「需要烧烤套装」。","zh-TW":"※如需使用可選服務，請在訂房確認後透過訊息告知「攜帶寵物」「需要烤肉組合」。",ko:"※옵션을 이용하실 경우, 예약 확정 후 메시지로 '반려동물 동반' 또는 '바비큐 세트 이용 희망'이라고 알려 주세요."},
   about_end:{ja:"上記をご理解のうえ、貸切空間でBBQや団らんを楽しみたい方にご利用いただいています。",en:"Our guests are people who understand the above and want to enjoy BBQ and time together in a private space.","zh-CN":"我们的住客都是在理解以上内容后，希望在包租空间里享受烧烤与团聚时光的客人。","zh-TW":"我們的住客都是在理解以上內容後，希望在包租空間裡享受烤肉與團聚時光的客人。",ko:"위 내용을 이해하신 뒤, 독채 공간에서 바비큐와 단란한 시간을 즐기고 싶은 분들이 이용하고 계십니다."},
+  pre_t:{ja:"ご到着前にご確認ください",en:"Please read before you arrive","zh-CN":"抵达前请务必确认","zh-TW":"抵達前請務必確認",ko:"도착 전에 꼭 확인해 주세요"},
+  pre_lead:{ja:"ご宿泊の前に、次の4点をご確認ください。各項目の［確認しました］を押してください。",en:"Please check the following four points before your stay, and press “I have read this” for each.","zh-CN":"入住前，请确认以下四点，并逐项点击「我已确认」。","zh-TW":"入住前，請確認以下四點，並逐項點擊「我已確認」。",ko:"숙박 전에 아래 4가지를 확인하시고, 각 항목의 '확인했습니다'를 눌러 주세요."},
+  pre_car:{ja:"お車でのご来館が前提の立地です。スーパーやコンビニは徒歩圏内になく、伊東駅から6.8km（車で14分）、宇佐美駅から3.2km（車で7分）離れています（Googleマップ調べ）。",en:"The house is meant to be reached by car. There are no supermarkets or convenience stores within walking distance, and it is 6.8 km (14 min by car) from Ito Station and 3.2 km (7 min by car) from Usami Station (per Google Maps).","zh-CN":"本住宿以驾车前往为前提。步行范围内没有超市和便利店，距伊东站6.8公里（驾车14分钟），距宇佐美站3.2公里（驾车7分钟）（据谷歌地图）。","zh-TW":"本住宿以開車前往為前提。步行範圍內沒有超市和便利商店，距伊東站6.8公里（開車14分鐘），距宇佐美站3.2公里（開車7分鐘）（依Google地圖）。",ko:"이 숙소는 차로 오시는 것을 전제로 합니다. 도보권 내에 슈퍼나 편의점이 없으며, 이토역에서 6.8km(차로 14분), 우사미역에서 3.2km(차로 7분) 떨어져 있습니다(구글 지도 기준)."},
+  pre_park:{ja:"駐車場は狭く、停めにくい場所です。運転に慣れていない方は、駐車に苦労することがあります。",en:"The parking area is narrow and can be hard to park in. Drivers who are not used to driving may find it difficult.","zh-CN":"停车场狭窄，不易停车。驾驶经验不足的客人可能会觉得停车困难。","zh-TW":"停車場狹窄，不易停車。駕駛經驗不足的客人可能會覺得停車困難。",ko:"주차 공간이 좁아 주차가 어려울 수 있습니다. 운전에 익숙하지 않으신 분은 주차에 어려움을 겪을 수 있습니다."},
+  pre_park_link:{ja:"詳しくは「駐車のご案内」をご覧ください",en:"See “Parking information” for details","zh-CN":"详情请见「停车指南」","zh-TW":"詳情請見「停車指南」",ko:"자세한 내용은 '주차 안내'를 확인해 주세요"},
+  pre_bbq:{ja:"BBQグリルのご利用は有料です（3,000円）。ご利用の場合は、予約確定後に、メッセージでお知らせください。",en:"Using the BBQ grill costs extra (¥3,000). If you wish to use it, please tell us by message after your booking is confirmed.","zh-CN":"使用烧烤炉需另付费（3,000日元）。如需使用，请在预订确认后通过消息告知。","zh-TW":"使用烤肉爐需另外付費（3,000日圓）。如需使用，請在訂房確認後透過訊息告知。",ko:"바비큐 그릴 이용은 유료입니다(3,000엔). 이용하실 경우 예약 확정 후 메시지로 알려 주세요."},
+  pre_pet:{ja:"ペットをお連れの場合は有料です（3,000円／滞在、3匹まで）。同伴される場合は、予約確定後に、メッセージでお知らせください。",en:"Bringing pets costs extra (¥3,000 per stay, up to 3 pets). If you bring a pet, please tell us by message after your booking is confirmed.","zh-CN":"携带宠物需另付费（每次住宿3,000日元，最多3只）。如需携带，请在预订确认后通过消息告知。","zh-TW":"攜帶寵物需另外付費（每次住宿3,000日圓，最多3隻）。如需攜帶，請在訂房確認後透過訊息告知。",ko:"반려동물을 동반하시면 유료입니다(1회 숙박 3,000엔, 최대 3마리). 동반하실 경우 예약 확정 후 메시지로 알려 주세요."},
+  pre_ok:{ja:"確認しました",en:"I have read this","zh-CN":"我已确认","zh-TW":"我已確認",ko:"확인했습니다"},
+  pre_done:{ja:"確認済み",en:"Confirmed","zh-CN":"已确认","zh-TW":"已確認",ko:"확인 완료"},
+  pre_row:{ja:"ご到着前の確認事項",en:"Before you arrive","zh-CN":"抵达前确认事项","zh-TW":"抵達前確認事項",ko:"도착 전 확인 사항"},
+  pre_view:{ja:"見る",en:"View","zh-CN":"查看","zh-TW":"查看",ko:"보기"}, 
   hr_smoke:{ja:"室内は禁煙です。",en:"No smoking indoors.","zh-CN":"室内禁烟。","zh-TW":"室內禁菸。",ko:"실내는 금연입니다."},
   hr_pet:{ja:"ペット同伴OK（要事前リクエスト・追加料金あり）",en:"Pets allowed (advance request required, additional fee applies)","zh-CN":"可携带宠物（需事先申请・需另付费用）","zh-TW":"可攜帶寵物（需事先申請・需另付費用）",ko:"반려동물 동반 가능（사전 요청 필요・추가 요금 있음）"},
   hr_party:{ja:"パーティー・イベントはお断りしております。",en:"Parties and events are not permitted.","zh-CN":"谢绝举办派对或活动。","zh-TW":"謝絕舉辦派對或活動。",ko:"파티・행사는 받지 않습니다."},
@@ -704,6 +726,8 @@ function content(key){
     '<ul style="padding-left:1.2em;margin:0 0 8px"><li style="margin-bottom:6px">'+t("about_opt1")+'</li><li>'+t("about_opt2")+'</li></ul>'+
     '<p style="font-size:13px;color:var(--ink-2)">'+t("about_opt_note")+'</p>'+
     p("about_end")};
+
+  case "pre": return {title:t("pre_row"), body: preList(false)};
       
   case "houserules": return {title:t("houserules"), body:
     '<ul style="padding-left:1.2em;margin:0">'+
@@ -824,6 +848,41 @@ function content(key){
   return null;
 }
 
+var PRE_ITEMS=[["car","pre_car"],["park","pre_park"],["bbq","pre_bbq"],["pet","pre_pet"]];
+function preOk(id){ try{ return !!localStorage.getItem("ihv_pre_"+id); }catch(e){ return false; } }
+function preAll(){ for(var i=0;i<PRE_ITEMS.length;i++){ if(!preOk(PRE_ITEMS[i][0])) return false; } return true; }
+function preList(withBtn){
+  var h2='<ul class="prelist">';
+  for(var i=0;i<PRE_ITEMS.length;i++){
+    var id=PRE_ITEMS[i][0], k=PRE_ITEMS[i][1], ok=preOk(id);
+    h2+='<li>'+t(k);
+    if(id==="park") h2+='<br><a href="#" data-go="parking" style="color:var(--accent-ink);font-weight:700">'+t("pre_park_link")+'</a>';
+    if(ok) h2+='<span class="pcok">✓ '+t("pre_done")+'</span>';
+    else if(withBtn) h2+='<button class="pcbtn" data-pre="'+id+'">'+t("pre_ok")+'</button>';
+    h2+='</li>';
+  }
+  return h2+'</ul>';
+}
+function renderPre(){
+  var el=document.getElementById("precheck"); if(!el) return;
+  el.hidden=false;
+  if(preAll()){
+    el.className="precheck done";
+    el.innerHTML='<div class="prerow"><span>'+t("pre_row")+'　<b style="color:var(--accent-ink)">✓ '+t("pre_done")+'</b></span><button class="prelink" id="preview">'+t("pre_view")+'</button></div>';
+    document.getElementById("preview").addEventListener("click",function(){ open("pre"); });
+    return;
+  }
+  el.className="precheck";
+  el.innerHTML='<h2>'+t("pre_t")+'</h2><p style="margin:0">'+t("pre_lead")+'</p>'+preList(true);
+  var bs=el.querySelectorAll("[data-pre]");
+  for(var i=0;i<bs.length;i++){ (function(b){ b.addEventListener("click",function(){
+    try{ localStorage.setItem("ihv_pre_"+b.getAttribute("data-pre"),"1"); }catch(e){}
+    renderPre();
+  }); })(bs[i]); }
+  var gs=el.querySelectorAll("[data-go]");
+  for(var j=0;j<gs.length;j++){ (function(a){ a.addEventListener("click",function(e){ e.preventDefault(); open(a.getAttribute("data-go")); }); })(gs[j]); }
+}
+  
 function render(){
   document.documentElement.lang=lang;
   document.getElementById("langlabel").innerHTML=LABEL[lang];
@@ -833,6 +892,7 @@ function render(){
   for(var j=0;j<ls.length;j++){ ls[j].setAttribute("aria-selected", ls[j].getAttribute("data-lang")===lang); }
   if(sheet.classList.contains("open") && current) show(current);
   renderStay();
+  renderPre();
 }
 
 var sheet=document.getElementById("sheet"),
