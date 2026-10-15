@@ -849,7 +849,12 @@ function content(key){
 }
 
 var PRE_ITEMS=[["car","pre_car"],["park","pre_park"],["bbq","pre_bbq"],["pet","pre_pet"]];
-function preOk(id){ try{ return !!localStorage.getItem("ihv_pre_"+id); }catch(e){ return false; } }
+function preCode(){
+  var c=""; try{ c=(new URLSearchParams(location.search).get("code")||"").trim(); }catch(e){}
+  if(!c){ try{ var sv=JSON.parse(localStorage.getItem("ihv_stay")||"null"); if(sv&&sv.code) c=sv.code; }catch(e){} }
+  return c||"nocode";
+}
+function preOk(id){ try{ return !!localStorage.getItem("ihv_pre_"+preCode()+"_"+id); }catch(e){ return false; } }
 function preAll(){ for(var i=0;i<PRE_ITEMS.length;i++){ if(!preOk(PRE_ITEMS[i][0])) return false; } return true; }
 function preList(withBtn){
   var h2='<ul class="prelist">';
@@ -876,8 +881,7 @@ function renderPre(){
   el.innerHTML='<h2>'+t("pre_t")+'</h2><p style="margin:0">'+t("pre_lead")+'</p>'+preList(true);
   var bs=el.querySelectorAll("[data-pre]");
   for(var i=0;i<bs.length;i++){ (function(b){ b.addEventListener("click",function(){
-    try{ localStorage.setItem("ihv_pre_"+b.getAttribute("data-pre"),"1"); }catch(e){}
-    renderPre();
+    try{ localStorage.setItem("ihv_pre_"+preCode()+"_"+b.getAttribute("data-pre"),"1"); }catch(e){}    renderPre();
   }); })(bs[i]); }
   var gs=el.querySelectorAll("[data-go]");
   for(var j=0;j<gs.length;j++){ (function(a){ a.addEventListener("click",function(e){ e.preventDefault(); open(a.getAttribute("data-go")); }); })(gs[j]); }
