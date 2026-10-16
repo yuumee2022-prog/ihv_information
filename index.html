@@ -597,6 +597,7 @@ var T={
   gas_lead:{ja:"停電などでガスが止まったときの復帰方法です。",en:"How to restore the gas after it stops, for example after a power outage.","zh-CN":"停电等导致燃气被切断时的复位方法。","zh-TW":"停電等導致瓦斯被切斷時的復位方法。",ko:"정전 등으로 가스가 멈췄을 때의 복구 방법입니다."},
   washer_lead:{ja:"洗剤は本体内のタンクから自動で投入されるコースがあります。柔軟剤は手動です。",en:"Some courses dispense detergent automatically from the built-in tank. Fabric softener is added manually.","zh-CN":"部分模式会从机身内水箱自动投放洗涤剂，柔顺剂需手动投放。","zh-TW":"部分模式會從機身內水箱自動投放洗滌劑，柔軟精需手動投放。",ko:"일부 코스는 본체 내 탱크에서 세제가 자동 투입됩니다. 섬유유연제는 직접 넣어 주세요."},
   sofamat_lead:{ja:"床に敷いて使う簡易ベッドの広げ方と、布団・枕の保管場所です。",en:"How to unfold the floor mattress, and where the futons and pillows are stored.","zh-CN":"铺在地板上的简易床的展开方法，以及被褥・枕头的收纳位置。","zh-TW":"鋪在地板上的簡易床的展開方法，以及被褥・枕頭的收納位置。",ko:"바닥에 까는 간이 침대를 펼치는 방법과 이불・베개 보관 장소입니다."},
+  sofabed_lead:{ja:"手前に引き出して広げる、ソファ型のベッドです。",en:"A sofa that pulls out into a bed.","zh-CN":"向前拉出展开的沙发床。","zh-TW":"向前拉出展開的沙發床。",ko:"앞으로 당겨 펼치는 소파베드입니다."},
   btn_guide_page:{ja:"写真つきの手順を見る",en:"See the step-by-step guide with photos","zh-CN":"查看附照片的步骤说明","zh-TW":"查看附照片的步驟說明",ko:"사진이 있는 순서 보기"},
   btn_ito:{ja:"伊東観光協会のサイトを見る",en:"Visit the Ito Tourism Association site","zh-CN":"访问伊东观光协会网站","zh-TW":"造訪伊東觀光協會網站",ko:"이토관광협회 사이트 보기"},
 
@@ -716,7 +717,8 @@ function content(key){
 
   case "sofabed": return {title:t("sofabed_sofamat"), body:
     h("sofabed")+
-    fill("【要記入：ソファベッドの展開手順。写真か短い動画があると伝わります】")+
+    p("sofabed_lead")+
+    pbtn("sofa-bed.html","btn_guide_page")+
     h("sofamat")+
     p("sofamat_lead")+
     pbtn("sofa-mattress.html","btn_guide_page")};
