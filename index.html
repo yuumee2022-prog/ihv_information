@@ -440,7 +440,8 @@ var T={
   photo_need_cat:{ja:"カテゴリを選んでください。",en:"Please choose a category.","zh-CN":"请选择分类。","zh-TW":"請選擇分類。",ko:"카테고리를 선택해 주세요."},
   photo_sending:{ja:"送信中…",en:"Sending…","zh-CN":"发送中…","zh-TW":"傳送中…",ko:"보내는 중…"},
   photo_done:{ja:"送信しました。ありがとうございました。",en:"Sent. Thank you!","zh-CN":"已发送，谢谢您！","zh-TW":"已傳送，謝謝您！",ko:"전송했습니다. 감사합니다!"},
-  photo_fail:{ja:"送信できませんでした。電波の良い場所でもう一度お試しください。",en:"Could not send. Please try again where the signal is better.","zh-CN":"发送失败，请在信号较好的地方重试。","zh-TW":"傳送失敗，請在訊號較好的地方重試。",ko:"전송하지 못했습니다. 신호가 좋은 곳에서 다시 시도해 주세요."},
+  photo_noreply:{ja:"このアプリでは、ご返信ができません。返信が必要なご連絡は、ご予約サイトのメッセージをご利用ください。",en:"We cannot reply inside this app. If you need a reply, please message us through your booking site.","zh-CN":"本应用内无法回复。如需回复，请通过预订网站的消息功能联系我们。","zh-TW":"本應用程式內無法回覆。如需回覆，請透過訂房網站的訊息功能聯絡我們。",ko:"이 앱에서는 답변드릴 수 없습니다. 답변이 필요한 경우 예약 사이트 메시지로 연락해 주세요."},
+  wifi_note:{ja:"電波が弱い場所があります。つながりにくいときは、場所を変えてお試しください。",en:"The signal can be weak in some spots. If it won't connect, try moving to another place.","zh-CN":"部分位置信号较弱。如连接不上，请换个位置再试。","zh-TW":"部分位置訊號較弱。如連線不上，請換個位置再試。",ko:"일부 장소에서는 신호가 약할 수 있습니다. 연결이 잘 안 되면 장소를 옮겨 시도해 주세요."},
   hw1:{ja:"施設内でよかった点・気になった点を見つける",en:"Spot something you liked, or something that needs attention","zh-CN":"在设施内发现优点或在意之处","zh-TW":"在設施內發現優點或在意之處",ko:"시설 안에서 좋았던 점이나 신경 쓰인 점을 발견합니다"},
   hw2:{ja:"「撮影開始」ボタンをタップ",en:"Tap the photo button","zh-CN":"点击「开始拍摄」按钮","zh-TW":"點擊「開始拍攝」按鈕",ko:"「촬영 시작」 버튼을 탭합니다"},
   hw3:{ja:"コメントしたい点をカメラで撮影する",en:"Take a photo of it","zh-CN":"用相机拍摄想留言的地方","zh-TW":"用相機拍攝想留言的地方",ko:"코멘트하고 싶은 곳을 카메라로 촬영합니다"},
@@ -664,7 +665,7 @@ function content(key){
     '<h3>2.4GHz</h3>'+
     '<div class="kv"><span class="k">'+t("network")+'</span><span class="v" id="ssid24">izu_high_village_g</span><button class="copy" data-copy="ssid24">'+t("copy")+'</button></div>'+
     '<div class="kv"><span class="k">'+t("password")+'</span><span class="v" id="pass24">izuhighvillage</span><button class="copy" data-copy="pass24">'+t("copy")+'</button></div>'+
-    ''};
+    '<p style="font-size:13px;color:var(--ink-2);margin-top:14px">'+t("wifi_note")+'</p>'};
 
   case "sos": return {title:t("contact"), body:
     h("help_urgent_h")+
@@ -752,6 +753,7 @@ function content(key){
       '<li>'+t("hw4")+'</li><li>'+t("hw5")+'</li><li>'+t("hw6")+'</li>'+
     '</ol></div>'+
     '<p>'+t("photo_lead")+'</p>'+
+    '<p style="font-size:13px;color:var(--ink-2)">'+t("photo_noreply")+'</p>'+
     '<div class="shot" id="shotbox"><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span><span class="plus">+</span></div>'+
     '<input type="file" accept="image/*" capture="environment" id="shotinput" hidden>'+
     '<button class="shotbtn" id="shotbtn"><svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="M4 7h3.5L9 5h6l1.5 2H20a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.4"/></svg>'+t("photo_shoot")+'</button>'+
