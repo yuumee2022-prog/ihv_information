@@ -932,7 +932,7 @@ function bindGo(){
 function keyBody(){
   var now=Date.now();
   if(!stay) return p("key_nolink");
-  if(now>=stay.co) return p("key_after");
+  if(now>=stay.co+60*60*1000) return p("key_after");
   if(!stay.key){
     if(now<stay.ci){ var ci=jst(stay.ci); return p("key_before").replace("{d}",ci.m+"/"+ci.d).replace("{t}",ci.hm); }
     return p("key_none");
