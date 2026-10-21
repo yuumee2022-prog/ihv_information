@@ -1138,11 +1138,16 @@ function bindCk(){
 function sendCk(action, abtn){
   if(!stay || ckSent(action) || ckBusy[action]) return;
   ckBusy[action]=true; abtn.disabled=true;
-  fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({token:GAS_TOKEN,action:action})})
-    .then(function(){ try{ localStorage.setItem(ckKey(action),"1"); }catch(e){} ckBusy[action]=false; updateCkBar(); })
+  fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({token:GAS_TOKEN,action:action,code:stay.code})})
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(!res||!res.ok) throw new Error("ck");
+      try{ localStorage.setItem(ckKey(action),"1"); }catch(e){}
+      ckBusy[action]=false; updateCkBar();
+    })
     .catch(function(){ ckBusy[action]=false; abtn.disabled=false; });
 }
-
+  
 (function(){
   var KEY="ihv_stay", reqCode="", saved=null;
   try{ saved=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
@@ -1157,11 +1162,11 @@ function sendCk(action, abtn){
       var s=(res&&res.ok&&res.stay)?res.stay:null;
       try{ localStorage.setItem(KEY,JSON.stringify({code:reqCode,co:s?s.co:null})); }catch(e){}
       if(s){
-        stay=s; stay.key=(res.key||"");
+        stay=s; stay.key=(res.key||""); stay.code=reqCode;
         if(res.sent){
           try{
-            if(res.sent.checkin) localStorage.setItem("ihv_ck_checkin_"+s.ci,"1");
-            if(res.sent.checkout) localStorage.setItem("ihv_ck_checkout_"+s.co,"1");
+            if(res.sent.checkin) localStorage.setItem("ihv_ck_checkin_"+s.ci,"1"); else localStorage.removeItem("ihv_ck_checkin_"+s.ci);
+            if(res.sent.checkout) localStorage.setItem("ihv_ck_checkout_"+s.co,"1"); else localStorage.removeItem("ihv_ck_checkout_"+s.co);
           }catch(e){}
         }
         renderStay();
@@ -1175,8 +1180,7 @@ function sendCk(action, abtn){
     }).catch(function(){});
   }
   document.addEventListener("visibilitychange",function(){
-    var n=Date.now();
-    if(!document.hidden && stay && !stay.key && n>=stay.ci-5*60*1000 && n<stay.co) load();
+    if(!document.hidden && stay) load();
   });
   load();
 })();
