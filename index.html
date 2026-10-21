@@ -1150,7 +1150,6 @@ function sendCk(action, abtn){
   var c=null;
   try{ c=new URLSearchParams(location.search).get("code"); }catch(e){}
   if(c&&c.trim()) reqCode=c.trim();
-  else if(saved&&saved.code) reqCode=saved.code;
   if(!reqCode) return;
   var timer=null;
   function load(){
