@@ -400,6 +400,8 @@ var T={
   st_today_out_t:{ja:"本日チェックアウト",en:"Check-out today","zh-CN":"今天退房","zh-TW":"今天退房",ko:"오늘 체크아웃"},
   st_by_sub:{ja:"{t}まで",en:"By {t}","zh-CN":"{t}前","zh-TW":"{t}前",ko:"{t}까지"},
   st_thanks_t:{ja:"ご宿泊ありがとうございました",en:"Thank you for staying","zh-CN":"感谢您的入住","zh-TW":"感謝您的入住",ko:"머물러 주셔서 감사합니다"},
+  st_notin_t:{ja:"未チェックイン",en:"Not checked in","zh-CN":"未办理入住","zh-TW":"未辦理入住",ko:"체크인 전"},
+  st_out_today_sub:{ja:"チェックアウト 本日 {t}まで",en:"Check-out today by {t}","zh-CN":"退房 今天 {t}前","zh-TW":"退房 今天 {t}前",ko:"체크아웃 오늘 {t}까지"},
   ck_in_btn:{ja:"チェックインしました",en:"I've arrived","zh-CN":"已到达","zh-TW":"已到達",ko:"도착했습니다"},
   ck_out_btn:{ja:"チェックアウトしました",en:"I'm leaving","zh-CN":"即将出发","zh-TW":"即將出發",ko:"출발합니다"},  ck_sent:{ja:"送信済み",en:"Sent","zh-CN":"已发送","zh-TW":"已傳送",ko:"전송됨"},
   contact:{ja:"お困りのとき",en:"Need help?","zh-CN":"需要帮助？","zh-TW":"需要協助？",ko:"도움이 필요하세요?"},
@@ -1114,11 +1116,20 @@ function renderStay(){
   if(stay){
     var now=nowMs(), ci=jst(stay.ci), co=jst(stay.co);
     var dNow=jday(now), dCi=jday(stay.ci), dCo=jday(stay.co);
-    if(now<stay.ci){
+    var inSent=ckSent("checkin"), outSent=ckSent("checkout");
+    if(now<stay.co && outSent){ title=t("st_thanks_t"); sub=""; }
+    else if(now<stay.ci){
       if(dCi===dNow){ title=t("st_today_in_t"); sub=fmt(t("st_from_sub"),{t:ci.hm}); }
       else { title=(dCi-dNow===1)?t("st_tomorrow_t"):fmt(t("st_before_t"),{n:dCi-dNow}); sub=fmt(t("st_in_sub"),{d:ci.m+"/"+ci.d,t:ci.hm}); }
     } else if(now<stay.co){
-      if(dCo===dNow){ title=t("st_today_out_t"); sub=fmt(t("st_by_sub"),{t:co.hm}); }
+      if(!inSent){
+        if(dCi===dNow){ title=t("st_today_in_t"); sub=fmt(t("st_from_sub"),{t:ci.hm}); }
+        else {
+          title=t("st_notin_t");
+          sub=(dCo===dNow) ? fmt(t("st_out_today_sub"),{t:co.hm}) : fmt(t("st_out_sub"),{d:co.m+"/"+co.d,t:co.hm});
+        }
+      }
+      else if(dCo===dNow){ title=t("st_today_out_t"); sub=fmt(t("st_by_sub"),{t:co.hm}); }
       else { title=t("stay_title"); sub=fmt(t("st_out_sub"),{d:co.m+"/"+co.d,t:co.hm}); }
     } else if(dCo===dNow){ title=t("st_thanks_t"); sub=""; }
   }
@@ -1130,14 +1141,15 @@ var ckTimer=null, ckBusy={};
 function ckKey(action){ return "ihv_ck_"+action+"_"+(action==="checkin"?stay.ci:stay.co); }
 function ckSent(action){ if(TEST_AT!==null) return !!testSent[action]; try{ return !!localStorage.getItem(ckKey(action)); }catch(e){ return false; } }
 function ckStart(){ return jday(stay.co)*86400000-9*3600000+4*3600000; }  // チェックアウト当日の4:00(JST)
-
+function ckInEnd(){ return (jday(stay.ci)+1)*86400000-9*3600000+4*3600000; }  // チェックイン翌日の4:00(JST)
+  
 function updateCkBar(){
   var bar=document.getElementById("ckbar"), bi=document.getElementById("ckinbtn"), bo=document.getElementById("ckoutbtn");
   if(!bar) return;
   clearTimeout(ckTimer);
   if(!stay){ bar.classList.remove("show"); return; }
   var now=nowMs();
-  var showIn = now>=stay.ci-5*60*1000 && jday(now)===jday(stay.ci) && now<stay.co;
+  var showIn = now>=stay.ci-5*60*1000 && now<ckInEnd() && now<stay.co;
   var showOut = jday(now)===jday(stay.co) && jstHour(now)>=4
     && (CHECKOUT_BUTTON_LIMIT_HOUR===null || jstHour(now) < CHECKOUT_BUTTON_LIMIT_HOUR);
   bar.classList.toggle("show", showIn||showOut);
@@ -1147,7 +1159,7 @@ function updateCkBar(){
   bi.disabled = sIn || !!ckBusy.checkin;  bi.textContent = t(sIn ? "ck_sent" : "ck_in_btn");
   bo.disabled = sOut || !!ckBusy.checkout; bo.textContent = t(sOut ? "ck_sent" : "ck_out_btn");
   // ボタンが出る・消える時刻になったら、画面を自動で更新する
-  var cand=[stay.ci-5*60*1000, stay.ci, ckStart(), stay.co], next=null;
+  var cand=[stay.ci-5*60*1000, stay.ci, (jday(stay.ci)+1)*86400000-9*3600000, ckInEnd(), ckStart(), stay.co], next=null;
   for(var k=0;k<cand.length;k++){ if(cand[k]>now && (next===null||cand[k]<next)) next=cand[k]; }
   if(next!==null) ckTimer=setTimeout(function(){ renderStay(); }, Math.min(next-now+1000, 3600000));
 }
@@ -1160,14 +1172,14 @@ function bindCk(){
 }
 function sendCk(action, abtn){
   if(!stay || ckSent(action) || ckBusy[action]) return;
-  if(TEST_AT!==null){ testSent[action]=true; updateCkBar(); return; }
+  if(TEST_AT!==null){ testSent[action]=true; renderStay(); return; }
   ckBusy[action]=true; abtn.disabled=true;
   fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({token:GAS_TOKEN,action:action,code:stay.code})})
     .then(function(r){ return r.json(); })
     .then(function(res){
       if(!res||!res.ok) throw new Error("ck");
       try{ localStorage.setItem(ckKey(action),"1"); }catch(e){}
-      ckBusy[action]=false; updateCkBar();
+      ckBusy[action]=false; renderStay();
     })
     .catch(function(){ ckBusy[action]=false; abtn.disabled=false; });
 }
