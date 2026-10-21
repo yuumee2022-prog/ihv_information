@@ -1152,7 +1152,7 @@ function updateCkBar(){
   clearTimeout(ckTimer);
   if(!stay){ bar.classList.remove("show"); return; }
   var now=nowMs();
-  var showIn = now>=stay.ci-5*60*1000 && now<ckInEnd() && now<stay.co;
+  var showIn = now>=stay.ci-5*60*1000 && now<(ckSent("checkin") ? ckInEnd() : ckStart()) && now<stay.co;
   var showOut = jday(now)===jday(stay.co) && jstHour(now)>=4
     && (CHECKOUT_BUTTON_LIMIT_HOUR===null || jstHour(now) < CHECKOUT_BUTTON_LIMIT_HOUR);
   bar.classList.toggle("show", showIn||showOut);
