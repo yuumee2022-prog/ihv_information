@@ -591,6 +591,8 @@ var T={
   keyno:{ja:"鍵番号",en:"Key code","zh-CN":"门锁密码","zh-TW":"門鎖密碼",ko:"도어락 번호"},
   key_nolink:{ja:"ご予約専用のリンクから開くと、ご滞在中にここへ鍵番号が表示されます。",en:"Open this app from your personal booking link, and your key code will appear here during your stay.","zh-CN":"请从您的专属预订链接打开本应用，入住期间门锁密码将显示在此处。","zh-TW":"請從您的專屬訂房連結開啟本應用，入住期間門鎖密碼將顯示於此。",ko:"예약 전용 링크로 이 앱을 열면 숙박 중 도어락 번호가 여기에 표시됩니다."},
   key_before:{ja:"鍵番号は、チェックイン時刻（{d} {t}）から表示されます。",en:"Your key code will appear from check-in time ({d} {t}).","zh-CN":"门锁密码将从入住时间（{d} {t}）起显示。","zh-TW":"門鎖密碼將從入住時間（{d} {t}）起顯示。",ko:"도어락 번호는 체크인 시간({d} {t})부터 표시됩니다."},
+  key_before2:{ja:"ご宿泊者様全員の事前チェックイン登録を、ご到着前にお済ませください。登録のリンクは、ご予約サイトのメッセージでお送りしています。",en:"Before you arrive, please complete pre-check-in registration for every guest in your party. The registration link was sent through your booking site's messages.","zh-CN":"抵达前，请为所有入住人员完成事前入住登记。登记链接已通过预订网站的消息发送给您。","zh-TW":"抵達前，請為所有住宿人員完成事前入住登記。登記連結已透過訂房網站的訊息傳送給您。",ko:"도착 전에 모든 투숙객의 사전 체크인 등록을 완료해 주세요. 등록 링크는 예약 사이트 메시지로 보내드렸습니다."},
+  key_before3:{ja:"チェックイン時刻より前にはご案内できません。アーリーチェックイン（有料）をご希望の場合は、事前にご予約サイトのメッセージでご相談ください。",en:"We cannot admit guests before the check-in time. If you would like early check-in (paid), please ask us in advance through your booking site's messages.","zh-CN":"入住时间之前无法为您办理入住。如需提前入住（收费），请提前通过预订网站的消息联系我们。","zh-TW":"入住時間之前無法為您辦理入住。如需提前入住（收費），請提前透過訂房網站的訊息聯絡我們。",ko:"체크인 시간 이전에는 안내해 드릴 수 없습니다. 얼리 체크인(유료)을 원하시면 예약 사이트 메시지로 미리 문의해 주세요."},
   key_after:{ja:"ご滞在は終了しました。ありがとうございました。",en:"Your stay has ended. Thank you.","zh-CN":"您的住宿已结束，感谢您的光临。","zh-TW":"您的住宿已結束，感謝您的光臨。",ko:"숙박이 종료되었습니다. 감사합니다."},
   key_none:{ja:"鍵番号を表示できません。「お困りのとき」からご連絡ください。",en:"We could not show the key code. Please use \"Need help?\" to contact us.","zh-CN":"无法显示门锁密码，请通过“需要帮助？”联系我们。","zh-TW":"無法顯示門鎖密碼，請透過「需要協助？」聯絡我們。",ko:"도어락 번호를 표시할 수 없습니다. '도움이 필요하세요?'에서 연락해 주세요."},
   key_how:{ja:"開け方を見る",en:"How to open the door","zh-CN":"查看开锁方法","zh-TW":"查看開鎖方法",ko:"여는 방법 보기"},
@@ -934,7 +936,7 @@ function keyBody(){
   if(!stay) return p("key_nolink");
   if(now>=stay.co+60*60*1000) return p("key_after");
   if(!stay.key){
-    if(now<stay.ci){ var ci=jst(stay.ci); return p("key_before").replace("{d}",ci.m+"/"+ci.d).replace("{t}",ci.hm); }
+    if(now<stay.ci){ var ci=jst(stay.ci); return p("key_before").replace("{d}",ci.m+"/"+ci.d).replace("{t}",ci.hm)+p("key_before2")+p("key_before3"); }
     return p("key_none");
   }
   return '<div class="kv"><span class="v" id="keyval" style="font-size:34px;font-weight:700;letter-spacing:.12em">'+stay.key+'</span><button class="copy" data-copy="keyval">'+t("copy")+'</button></div>'+
