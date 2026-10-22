@@ -1176,7 +1176,7 @@ function updateCkBar(){
   bi.disabled = sIn || !!ckBusy.checkin;  bi.textContent = t(sIn ? "ck_sent" : "ck_in_btn");
   bo.disabled = sOut || !!ckBusy.checkout; bo.textContent = t(sOut ? "ck_sent" : "ck_out_btn");
   // ボタンが出る・消える時刻になったら、画面を自動で更新する
-  var cand=[stay.ci-5*60*1000, stay.ci, (jday(stay.ci)+1)*86400000-9*3600000, ckInEnd(), ckStart(), stay.co], next=null;
+  var cand=[stay.ci-5*60*1000, stay.ci, (jday(stay.ci)+1)*86400000-9*3600000, ckInEnd(), ckStart(), stay.co, (jday(now)+1)*86400000-9*3600000], next=null;
   for(var k=0;k<cand.length;k++){ if(cand[k]>now && (next===null||cand[k]<next)) next=cand[k]; }
   if(next!==null) ckTimer=setTimeout(function(){ renderStay(); }, Math.min(next-now+1000, 3600000));
 }
