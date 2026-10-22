@@ -355,7 +355,7 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
       <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.5"/></svg>
       <span data-i18n="news"></span>
     </button>
-    <button data-open="map">
+    <button data-open="access">
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
       <span data-i18n="nav_around"></span>
     </button>
@@ -404,14 +404,14 @@ var T={
   st_out_today_sub:{ja:"チェックアウト 本日 {t}まで",en:"Check-out today by {t}","zh-CN":"退房 今天 {t}前","zh-TW":"退房 今天 {t}前",ko:"체크아웃 오늘 {t}까지"},
   ck_in_btn:{ja:"チェックインしました",en:"I've arrived","zh-CN":"已到达","zh-TW":"已到達",ko:"도착했습니다"},
   ck_out_btn:{ja:"チェックアウトしました",en:"I'm leaving","zh-CN":"即将出发","zh-TW":"即將出發",ko:"출발합니다"},  ck_sent:{ja:"送信済み",en:"Sent","zh-CN":"已发送","zh-TW":"已傳送",ko:"전송됨"},
-  contact:{ja:"お困りのとき",en:"Need help?","zh-CN":"需要帮助？","zh-TW":"需要協助？",ko:"도움이 필요하세요?"},
+  contact:{ja:"お問い合わせ",en:"Contact us","zh-CN":"联系我们","zh-TW":"聯絡我們",ko:"문의하기"},
   small:{ja:"小",en:"Small","zh-CN":"小","zh-TW":"小",ko:"작게"},
   large:{ja:"大",en:"Large","zh-CN":"大","zh-TW":"大",ko:"크게"},
   guide:{ja:"設備・備品",en:"Amenities","zh-CN":"设施・备品","zh-TW":"設施・備品",ko:"설비・비품"},
   map:{ja:"MAP",en:"Map","zh-CN":"地图","zh-TW":"地圖",ko:"지도"},
   gomi:{ja:"ごみの分別",en:"Rubbish","zh-CN":"垃圾分类","zh-TW":"垃圾分類",ko:"쓰레기 분리배출"},
   bath:{ja:"お風呂・トイレ",en:"Bath & toilet","zh-CN":"浴室・卫生间","zh-TW":"浴室・洗手間",ko:"욕실・화장실"},
-  bbq:{ja:"BBQセット",en:"BBQ set","zh-CN":"烧烤套装","zh-TW":"烤肉組合",ko:"바비큐 세트"},
+  bbq:{ja:"BBQのご利用",en:"Using the BBQ","zh-CN":"烧烤使用说明","zh-TW":"烤肉使用說明",ko:"바비큐 이용"},
   dog:{ja:"犬とのご滞在",en:"With your dog","zh-CN":"携犬入住","zh-TW":"攜犬入住",ko:"반려견 동반"},
   shops:{ja:"おすすめMAP",en:"Our map","zh-CN":"推荐地图","zh-TW":"推薦地圖",ko:"추천 지도"},
   checkout:{ja:"チェックイン／チェックアウト",en:"Check-in / Check-out","zh-CN":"入住／退房","zh-TW":"入住／退房",ko:"체크인／체크아웃"},  inside:{ja:"室内でのお願い",en:"Inside the house","zh-CN":"室内须知","zh-TW":"室內須知",ko:"실내 안내"},
@@ -419,12 +419,12 @@ var T={
   parking:{ja:"駐車のご案内",en:"Parking information","zh-CN":"停车指南","zh-TW":"停車指南",ko:"주차 안내"},
   nav_home:{ja:"ホーム",en:"Home","zh-CN":"首页","zh-TW":"首頁",ko:"홈"},
   news:{ja:"お知らせ",en:"News","zh-CN":"通知","zh-TW":"通知",ko:"공지"},
-  nav_around:{ja:"周辺MAP",en:"Around","zh-CN":"周边地图","zh-TW":"周邊地圖",ko:"주변 지도"},
-  survey:{ja:"アンケート",en:"Survey","zh-CN":"问卷","zh-TW":"問卷",ko:"설문"},
+  nav_around:{ja:"アクセス",en:"Access","zh-CN":"交通","zh-TW":"交通",ko:"오시는 길"},
+  survey:{ja:"レビュー",en:"Review","zh-CN":"评价","zh-TW":"評價",ko:"리뷰"},
   legal:{ja:"伊東市宇佐美 ／ 一棟貸し・最大10名",en:"Usami, Ito City — whole house, up to 10 guests","zh-CN":"伊东市宇佐美／整栋出租・最多10人","zh-TW":"伊東市宇佐美／整棟出租・最多10人",ko:"이토시 우사미 / 독채 대여・최대 10명"},
   topics:{ja:"トピックス",en:"Topics","zh-CN":"主题","zh-TW":"主題",ko:"토픽"},
   ticket:{ja:"チケット",en:"Tickets","zh-CN":"票券","zh-TW":"票券",ko:"티켓"},
-  photo:{ja:"写真でコメント",en:"Photo feedback","zh-CN":"照片留言","zh-TW":"照片留言",ko:"사진 코멘트"},
+  photo:{ja:"ご感想・お気づきの点",en:"Comments & feedback","zh-CN":"感想・反馈","zh-TW":"感想・回饋",ko:"후기・의견"},
   washer:{ja:"洗濯機",en:"Washing machine","zh-CN":"洗衣机","zh-TW":"洗衣機",ko:"세탁기"},
   washer_dryer:{ja:"洗濯機／衣類乾燥機",en:"Washer / Dryer","zh-CN":"洗衣机／烘干机","zh-TW":"洗衣機／烘乾機",ko:"세탁기／건조기"},
   dryer:{ja:"衣類乾燥機",en:"Clothes dryer","zh-CN":"烘干机","zh-TW":"烘乾機",ko:"건조기"},
@@ -446,6 +446,7 @@ var T={
   photo_need_cat:{ja:"カテゴリを選んでください。",en:"Please choose a category.","zh-CN":"请选择分类。","zh-TW":"請選擇分類。",ko:"카테고리를 선택해 주세요."},
   photo_sending:{ja:"送信中…",en:"Sending…","zh-CN":"发送中…","zh-TW":"傳送中…",ko:"보내는 중…"},
   photo_done:{ja:"送信しました。ありがとうございました。",en:"Sent. Thank you!","zh-CN":"已发送，谢谢您！","zh-TW":"已傳送，謝謝您！",ko:"전송했습니다. 감사합니다!"},
+  photo_fail:{ja:"送信できませんでした。電波の良い場所でもう一度お試しください。",en:"Could not send. Please try again where the signal is better.","zh-CN":"发送失败，请在信号较好的地方重试。","zh-TW":"傳送失敗，請在訊號較好的地方重試。",ko:"전송하지 못했습니다. 신호가 좋은 곳에서 다시 시도해 주세요."},
   photo_noreply:{ja:"このアプリでは、ご返信ができません。返信が必要なご連絡は、ご予約サイトのメッセージをご利用ください。",en:"We cannot reply inside this app. If you need a reply, please message us through your booking site.","zh-CN":"本应用内无法回复。如需回复，请通过预订网站的消息功能联系我们。","zh-TW":"本應用程式內無法回覆。如需回覆，請透過訂房網站的訊息功能聯絡我們。",ko:"이 앱에서는 답변드릴 수 없습니다. 답변이 필요한 경우 예약 사이트 메시지로 연락해 주세요."},
   wifi_note:{ja:"電波が弱い場所があります。つながりにくいときは、場所を変えてお試しください。",en:"The signal can be weak in some spots. If it won't connect, try moving to another place.","zh-CN":"部分位置信号较弱。如连接不上，请换个位置再试。","zh-TW":"部分位置訊號較弱。如連線不上，請換個位置再試。",ko:"일부 장소에서는 신호가 약할 수 있습니다. 연결이 잘 안 되면 장소를 옮겨 시도해 주세요."},
   hw1:{ja:"施設内でよかった点・気になった点を見つける",en:"Spot something you liked, or something that needs attention","zh-CN":"在设施内发现优点或在意之处","zh-TW":"在設施內發現優點或在意之處",ko:"시설 안에서 좋았던 점이나 신경 쓰인 점을 발견합니다"},
@@ -567,6 +568,7 @@ var T={
 
   btn_park_pdf:{ja:"写真つきの駐車ガイドを見る",en:"See the parking guide with photos","zh-CN":"查看附照片的停车指南","zh-TW":"查看附照片的停車指南",ko:"사진이 있는 주차 안내 보기"},
   btn_shops_pdf:{ja:"Googleマップでまとめて見る",en:"See them all on Google Maps","zh-CN":"在Google地图上查看全部","zh-TW":"在Google地圖上查看全部",ko:"Google 지도에서 한번에 보기"},
+  btn_gmap:{ja:"Googleマップで開く",en:"Open in Google Maps","zh-CN":"在Google地图中打开","zh-TW":"在Google地圖中開啟",ko:"Google 지도에서 열기"},
   btn_fire_video:{ja:"炭の着火方法を動画で見る",en:"Watch the charcoal lighting video","zh-CN":"观看点炭方法视频","zh-TW":"觀看點炭方法影片",ko:"숯 점화 방법 영상 보기"},
   btn_review:{ja:"Googleマップにクチコミを書く",en:"Leave a review on Google Maps","zh-CN":"在Google地图上写评价","zh-TW":"在Google地圖上寫評論",ko:"Google 지도에 리뷰 남기기"},
 
@@ -575,7 +577,7 @@ var T={
   tel_emergency:{ja:"070-6450-0371 に電話",en:"Call 070-6450-0371","zh-CN":"拨打 070-6450-0371","zh-TW":"撥打 070-6450-0371",ko:"070-6450-0371로 전화"},
   plusline_name:{ja:"プラスライン株式会社（管理会社）",en:"Plusline Inc. (property manager)","zh-CN":"Plusline株式会社（管理公司）","zh-TW":"Plusline株式會社（管理公司）",ko:"Plusline 주식회사(관리회사)"},
   leak_warn:{ja:"水が漏れている、床や壁が濡れている、水が止まらない、排水が流れないときは、使うのをやめて、すぐにご連絡ください。",en:"If water is leaking, floors or walls are wet, water will not stop, or a drain is blocked, please stop using it and contact us right away.","zh-CN":"如发现漏水、地板或墙壁潮湿、水流不止或排水不畅，请立即停止使用并尽快联系我们。","zh-TW":"如發現漏水、地板或牆壁潮濕、水流不止或排水不順，請立即停止使用並盡快聯絡我們。",ko:"물이 새거나, 바닥이나 벽이 젖어 있거나, 물이 멈추지 않거나, 배수가 되지 않을 때는 사용을 중단하고 즉시 연락해 주세요."},
-  leak_link:{ja:"お困りのときの連絡先を見る",en:"See how to contact us","zh-CN":"查看联系方式","zh-TW":"查看聯絡方式",ko:"연락처 보기"},
+  leak_link:{ja:"お問い合わせ先を見る",en:"See how to contact us","zh-CN":"查看联系方式","zh-TW":"查看聯絡方式",ko:"연락처 보기"},
   help_urgent_h:{ja:"お急ぎのとき（水漏れ、停電、鍵が開かないなど）",en:"Urgent (water leak, power outage, cannot unlock the door)","zh-CN":"紧急情况（漏水、停电、打不开门锁等）","zh-TW":"緊急情況（漏水、停電、打不開門鎖等）",ko:"긴급 상황 (누수, 정전, 문이 열리지 않을 때 등)"},
   help_urgent_p:{ja:"すぐに対応が必要なときは、お電話ください。"},
   help_day:{ja:"8:00〜20:00　オペレーションセンター"},
@@ -586,7 +588,7 @@ var T={
   help_x_night:{en:"At night (20:00–8:00) or in an emergency, you can call:","zh-CN":"夜间（20:00至次日8:00）或遇紧急情况，可拨打以下电话：","zh-TW":"夜間（20:00至次日8:00）或遇緊急情況，可撥打以下電話：",ko:"야간(20:00~다음날 8:00) 또는 긴급 시에는 아래 번호로 전화하실 수 있습니다."},
   help_x_jaonly:{en:"Phone support is available in Japanese only. If you cannot get through, please send a message through your booking site, and we will reply the next morning.","zh-CN":"电话仅提供日语服务。如无法接通，请通过预订网站发送消息，我们将在次日早晨回复。","zh-TW":"電話僅提供日語服務。如無法接通，請透過訂房網站傳送訊息，我們將於隔日早晨回覆。",ko:"전화 응대는 일본어만 가능합니다. 연결되지 않으면 예약 사이트 메시지로 연락해 주세요. 다음 날 아침에 답변드리겠습니다."},
   help_normal_h:{ja:"お急ぎでないとき",en:"Not urgent","zh-CN":"非紧急情况","zh-TW":"非緊急情況",ko:"긴급하지 않은 경우"},
-  help_normal_p:{ja:"ご予約サイトのメッセージ、またはこのアプリの「写真でコメント」をご利用ください（アプリではご返信ができません）。",en:"Please use your booking site messages, or “Photo feedback” in this app. We cannot reply inside the app.","zh-CN":"请使用预订网站的消息功能，或本应用的「照片留言」。本应用内无法回复。","zh-TW":"請使用訂房網站的訊息功能，或本應用程式的「照片留言」。本應用程式內無法回覆。",ko:"예약 사이트 메시지 또는 이 앱의 '사진 코멘트'를 이용해 주세요. 앱 안에서는 답변드릴 수 없습니다."},
+  help_normal_p:{ja:"ご予約サイトのメッセージ、またはこのアプリの「ご感想・お気づきの点」をご利用ください（アプリではご返信ができません）。",en:"Please use your booking site messages, or “Comments & feedback” in this app. We cannot reply inside the app.","zh-CN":"请使用预订网站的消息功能，或本应用的「感想・反馈」。本应用内无法回复。","zh-TW":"請使用訂房網站的訊息功能，或本應用程式的「感想・回饋」。本應用程式內無法回覆。",ko:"예약 사이트 메시지 또는 이 앱의 '후기・의견'을 이용해 주세요. 앱 안에서는 답변드릴 수 없습니다."},
 
   sightseeing:{ja:"観光案内",en:"Things to do","zh-CN":"观光指南","zh-TW":"觀光導覽",ko:"관광 안내"},
   sight_1:{ja:"伊東の観光情報は、伊東観光協会の公式サイトにまとまっています。季節のイベント、温泉、体験、見どころが探せます。",en:"The Ito Tourism Association's official site covers events, hot springs, activities and sights across the area.","zh-CN":"伊东的观光信息汇总于伊东观光协会官方网站，可查询季节活动、温泉、体验与景点。","zh-TW":"伊東的觀光資訊彙整於伊東觀光協會官方網站，可查詢季節活動、溫泉、體驗與景點。",ko:"이토의 관광 정보는 이토관광협회 공식 사이트에 정리되어 있습니다. 계절 이벤트, 온천, 체험, 볼거리를 찾을 수 있습니다."},
@@ -598,7 +600,7 @@ var T={
   key_before2:{ja:"ご宿泊者様全員の事前チェックイン登録を、ご到着前にお済ませください。登録のリンクは、ご予約サイトのメッセージでお送りしています。",en:"Before you arrive, please complete pre-check-in registration for every guest in your party. The registration link was sent through your booking site's messages.","zh-CN":"抵达前，请为所有入住人员完成事前入住登记。登记链接已通过预订网站的消息发送给您。","zh-TW":"抵達前，請為所有住宿人員完成事前入住登記。登記連結已透過訂房網站的訊息傳送給您。",ko:"도착 전에 모든 투숙객의 사전 체크인 등록을 완료해 주세요. 등록 링크는 예약 사이트 메시지로 보내드렸습니다."},
   key_before3:{ja:"チェックイン時刻より前にはご案内できません。アーリーチェックイン（有料）をご希望の場合は、事前にご予約サイトのメッセージでご相談ください。",en:"We cannot admit guests before the check-in time. If you would like early check-in (paid), please ask us in advance through your booking site's messages.","zh-CN":"入住时间之前无法为您办理入住。如需提前入住（收费），请提前通过预订网站的消息联系我们。","zh-TW":"入住時間之前無法為您辦理入住。如需提前入住（收費），請提前透過訂房網站的訊息聯絡我們。",ko:"체크인 시간 이전에는 안내해 드릴 수 없습니다. 얼리 체크인(유료)을 원하시면 예약 사이트 메시지로 미리 문의해 주세요."},
   key_after:{ja:"ご滞在は終了しました。ありがとうございました。",en:"Your stay has ended. Thank you.","zh-CN":"您的住宿已结束，感谢您的光临。","zh-TW":"您的住宿已結束，感謝您的光臨。",ko:"숙박이 종료되었습니다. 감사합니다."},
-  key_none:{ja:"鍵番号を表示できません。「お困りのとき」からご連絡ください。",en:"We could not show the key code. Please use \"Need help?\" to contact us.","zh-CN":"无法显示门锁密码，请通过“需要帮助？”联系我们。","zh-TW":"無法顯示門鎖密碼，請透過「需要協助？」聯絡我們。",ko:"도어락 번호를 표시할 수 없습니다. '도움이 필요하세요?'에서 연락해 주세요."},
+  key_none:{ja:"鍵番号を表示できません。「お問い合わせ」からご連絡ください。",en:"We could not show the key code. Please reach us through \"Contact us\".","zh-CN":"无法显示门锁密码，请通过“联系我们”与我们联系。","zh-TW":"無法顯示門鎖密碼，請透過「聯絡我們」與我們聯繫。",ko:"도어락 번호를 표시할 수 없습니다. '문의하기'에서 연락해 주세요."},
   key_how:{ja:"開け方を見る",en:"How to open the door","zh-CN":"查看开锁方法","zh-TW":"查看開鎖方法",ko:"여는 방법 보기"},
   gasmeter:{ja:"ガスメーター",en:"Gas meter reset","zh-CN":"燃气表复位","zh-TW":"瓦斯錶復位",ko:"가스 계량기 복구"},
   sofamat:{ja:"ソファマットレス",en:"Sofa mattress","zh-CN":"沙发床垫","zh-TW":"沙發床墊",ko:"소파 매트리스"},
@@ -707,6 +709,10 @@ function content(key){
     p("map_1")+
     btn("https://maps.app.goo.gl/eKVXcQDCfapgmKn6A","btn_shops_pdf")+
     '<p style="font-size:13px;color:var(--ink-2)">'+t("map_2")+'</p>'};
+
+  case "access": return {title:t("nav_around"), body:
+    '<p><b>izu high village</b><br>静岡県伊東市宇佐美3236-24</p>'+
+    btn("https://maps.app.goo.gl/ZAHX6qTQPo683iSm9","btn_gmap")};
 
   case "night": return {title:t("night"), body:
     p("night_1")+p("night_2")+p("night_3")};
@@ -860,8 +866,7 @@ function content(key){
 
   case "survey": return {title:t("survey"), body:
     p("survey_1")+
-    btn("https://www.google.com/maps?cid=14939341476524001987","btn_review")+
-    fill("【要検討：Googleビジネスプロフィールの「クチコミを依頼」で出る g.page/r/… のURLに差し替えると、クチコミ入力画面に直行します】")};
+    btn("https://g.page/r/CcMKeb7rM1PPEBM/review","btn_review")};
   }
   return null;
 }
