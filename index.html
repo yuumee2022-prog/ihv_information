@@ -304,7 +304,7 @@ html[lang="ko"] body{font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto San
     </button>
     <button class="tile" data-open="washer">
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="14" r="4.5"/><path d="M7.5 6.5h.5M11 6.5h1.5"/></svg>
-      <span data-i18n="washer"></span>
+      <span data-i18n="washer_dryer"></span>
     </button>
     <button class="tile" data-open="sofabed">
       <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11V8a2 2 0 012-2h14a2 2 0 012 2v3"/><path d="M3 11a2 2 0 012 2v2h14v-2a2 2 0 012-2"/><path d="M3 15v3M21 15v3"/></svg>
@@ -426,6 +426,10 @@ var T={
   ticket:{ja:"チケット",en:"Tickets","zh-CN":"票券","zh-TW":"票券",ko:"티켓"},
   photo:{ja:"写真でコメント",en:"Photo feedback","zh-CN":"照片留言","zh-TW":"照片留言",ko:"사진 코멘트"},
   washer:{ja:"洗濯機",en:"Washing machine","zh-CN":"洗衣机","zh-TW":"洗衣機",ko:"세탁기"},
+  washer_dryer:{ja:"洗濯機／衣類乾燥機",en:"Washer / Dryer","zh-CN":"洗衣机／烘干机","zh-TW":"洗衣機／烘乾機",ko:"세탁기／건조기"},
+  dryer:{ja:"衣類乾燥機",en:"Clothes dryer","zh-CN":"烘干机","zh-TW":"烘乾機",ko:"건조기"},
+  dryer_soon:{ja:"使い方は、準備中です。",en:"Instructions are coming soon.","zh-CN":"使用方法正在准备中。","zh-TW":"使用方法準備中。",ko:"사용 방법은 준비 중입니다."},
+  
   sofabed:{ja:"ソファベッド",en:"Sofa bed","zh-CN":"沙发床","zh-TW":"沙發床",ko:"소파베드"},
   sofabed_sofamat:{ja:"ソファベッド／ソファマットレス",en:"Sofa bed / Sofa mattress","zh-CN":"沙发床／沙发床垫","zh-TW":"沙發床／沙發床墊",ko:"소파베드／소파 매트리스"},
   photo_howto:{ja:"使い方はこちら",en:"How it works","zh-CN":"使用方法","zh-TW":"使用方法",ko:"사용 방법"},
@@ -707,10 +711,13 @@ function content(key){
   case "night": return {title:t("night"), body:
     p("night_1")+p("night_2")+p("night_3")};
 
-  case "washer": return {title:t("washer"), body:
+  case "washer": return {title:t("washer_dryer"), body:
     leakWarn()+
+    h("washer")+
     p("washer_lead")+
-    pbtn("washer.html","btn_guide_page")};
+    pbtn("washer.html","btn_guide_page")+
+    h("dryer")+
+    p("dryer_soon")};
       
   case "doorlock": return {title:t("doorlock"), body:
     p("door_lead")+
