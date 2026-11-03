@@ -542,6 +542,12 @@ var T={
   co_2:{ja:"アーリーチェックイン／レイトチェックアウト（有料）をご希望の場合は、空き状況によりご案内しますので事前にご相談ください。",en:"Early check-in and late check-out are available for a fee, subject to availability — please ask in advance.","zh-CN":"如需提前入住／延迟退房（付费），将视空房情况安排，请事先咨询。","zh-TW":"如需提前入住／延遲退房（付費），將視空房情況安排，請事先洽詢。",ko:"얼리 체크인／레이트 체크아웃(유료)을 원하시면 공실 상황에 따라 안내드리니 미리 상담해 주세요."},
   co_3:{ja:"退出時の詳しい手順は、ご予約サイトのメッセージでお送りしています。そちらをご確認ください。",en:"Detailed check-out instructions are sent to you through your booking site's messages. Please check there.","zh-CN":"退房的详细步骤已通过预订网站的消息发送给您，请查阅。","zh-TW":"退房的詳細步驟已透過訂房網站的訊息發送給您，請查閱。",ko:"퇴실 시 자세한 절차는 예약 사이트 메시지로 보내드립니다. 그쪽을 확인해 주세요."},
   co_thanks:{ja:"izu high village にご宿泊いただき、ありがとうございました。また伊豆を訪れる機会がありましたら、ぜひお立ち寄りください。",en:"Thank you for staying at izu high village. We look forward to welcoming you again.","zh-CN":"感谢您入住 izu high village。若再有机会造访伊豆，欢迎再次光临。","zh-TW":"感謝您入住 izu high village。若再有機會造訪伊豆，歡迎再次光臨。",ko:"izu high village에 묵어주셔서 감사합니다. 다시 이즈를 찾으실 기회가 있다면 꼭 들러주세요."},
+  co_h_fee:{ja:"レイトチェックアウトの料金",en:"Late check-out fees","zh-CN":"延迟退房费用","zh-TW":"延遲退房費用",ko:"레이트 체크아웃 요금"},
+  co_fee_pre:{ja:"前日にご連絡の場合：1時間につき2,000円",en:"If you contact us the day before: ¥2,000 per hour","zh-CN":"前一天联系：每小时2,000日元","zh-TW":"前一天聯絡：每小時2,000日圓",ko:"전날 연락하신 경우: 1시간당 2,000엔"},
+  co_fee_day:{ja:"当日の場合：20分ごとに2,200円",en:"On the day: ¥2,200 per 20 minutes","zh-CN":"当天办理：每20分钟2,200日元","zh-TW":"當天辦理：每20分鐘2,200日圓",ko:"당일의 경우: 20분당 2,200엔"},
+  co_fee_note:{ja:"ご希望の場合は、前日の20:00までに、ご予約サイトのメッセージでご連絡ください。",en:"If you would like late check-out, please tell us through your booking site's messages by 20:00 the day before.","zh-CN":"如需延迟退房，请在前一天20:00前通过预订网站的消息功能联系我们。","zh-TW":"如需延遲退房，請於前一天20:00前透過訂房網站的訊息功能聯絡我們。",ko:"희망하시는 경우 전날 20:00까지 예약 사이트 메시지로 알려 주세요."},
+  co_h_exit:{ja:"退出時のお願い",en:"When you leave","zh-CN":"退房时的请求","zh-TW":"退房時的請求",ko:"퇴실 시 부탁드립니다"},
+  co_lock:{ja:"玄関のレバーを左に回して、必ず施錠してください。",en:"Please turn the entrance lever to the left to lock the door.","zh-CN":"请将玄关的拉杆向左转动，务必锁好门。","zh-TW":"請將玄關的拉桿向左轉動，務必鎖好門。",ko:"현관 레버를 왼쪽으로 돌려 반드시 잠가 주세요."},
 
   map_1:{ja:"この宿周辺のおすすめ店舗をGoogleマップにまとめています。",en:"We've collected our recommended places nearby on Google Maps.","zh-CN":"我们已将周边推荐店铺整理在Google地图上。","zh-TW":"我們已將周邊推薦店家整理在Google地圖上。",ko:"숙소 주변 추천 가게를 Google 지도에 정리해 두었습니다."},
   map_2:{ja:"営業時間や定休日は変更になる場合があります。最新情報はGoogleマップをご確認ください。",en:"Opening hours and closing days may change. Please check Google Maps for the latest.","zh-CN":"营业时间与公休日可能变更，最新信息请查看Google地图。","zh-TW":"營業時間與公休日可能變更，最新資訊請查看Google地圖。",ko:"영업시간과 휴무일은 변경될 수 있습니다. 최신 정보는 Google 지도를 확인해 주세요."},
@@ -851,7 +857,12 @@ function content(key){
     btn("https://drive.google.com/file/d/1fRTeixhxpVFGmQJ73sG8TivTmhn8Yc1u/view","btn_park_pdf")};
 
   case "checkout": return {title:t("checkout"), body:
-    p("co_1")+p("co_2")+p("co_3")+
+    p("co_1")+p("co_2")+
+    h("co_h_fee")+
+    '<ul style="padding-left:1.2em;margin:0 0 8px"><li style="margin-bottom:6px">'+t("co_fee_pre")+'</li><li>'+t("co_fee_day")+'</li></ul>'+
+    p("co_fee_note")+
+    h("co_h_exit")+p("co_lock")+
+    p("co_3")+
     '<div class="callout">'+t("co_thanks")+'</div>'};
 
   case "shops": return {title:t("shops"), body:
